@@ -18,7 +18,7 @@ class SpecialtiesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_specialties)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(com.google.android.material.R.drawable.mtrl_ic_arrow_back)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener { finish() }
 
         specialties = defaultSpecialties()
