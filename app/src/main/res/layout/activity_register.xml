@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tvTitleReg"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="@string/register_title"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:hint="@string/register_name"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleReg"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmailReg"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:hint="@string/login_email"
+            app:layout_constraintTop_toBottomOf="@id/tilName"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailReg"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassReg"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:hint="@string/login_password" app:endIconMode="password_toggle"
+            app:layout_constraintTop_toBottomOf="@id/tilEmailReg"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassReg"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPass2Reg"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:hint="@string/register_repeat_password" app:endIconMode="password_toggle"
+            app:layout_constraintTop_toBottomOf="@id/tilPassReg"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPass2Reg"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="@string/action_register"
+            app:layout_constraintTop_toBottomOf="@id/tilPass2Reg"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoLogin"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="@string/action_go_login"
+            app:layout_constraintTop_toBottomOf="@id/btnRegister"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

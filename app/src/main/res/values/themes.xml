@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Tema de la app (Material 3, sin ActionBar porque usamos Toolbar en XML) -->
+    <style name="Theme.MyApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- (Opcional) estilo de Toolbar reutilizable -->
+    <style name="Widget.MyApp.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+    </style>
+
+</resources>

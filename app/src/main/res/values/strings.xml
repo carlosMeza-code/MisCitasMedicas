@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">MisCitasMedicas</string>
+
+    <!-- Común -->
+    <string name="action_back">Atrás</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_login">Iniciar sesión</string>
+    <string name="action_register">Registrarme</string>
+    <string name="action_go_register">Crear cuenta</string>
+    <string name="action_go_login">Ya tengo cuenta</string>
+
+    <!-- Login -->
+    <string name="login_title">🔐 Inicia sesión</string>
+    <string name="login_email">Correo</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_hint_email">tucorreo@ejemplo.com</string>
+
+    <!-- Registro -->
+    <string name="register_title">📝 Crear cuenta</string>
+    <string name="register_name">Nombre completo</string>
+    <string name="register_repeat_password">Repite la contraseña</string>
+
+    <!-- Home -->
+    <string name="home_title">🏠 Inicio</string>
+    <string name="home_cta_specialties">Ver especialidades</string>
+    <string name="home_cta_doctors">Ver doctores</string>
+    <string name="home_cta_new_appointment">➕ Nueva cita</string>
+
+    <!-- Especialidades -->
+    <string name="specialties_title">🗂️ Especialidades</string>
+    <string name="specialties_search_hint">Buscar especialidad…</string>
+
+    <!-- Doctores -->
+    <string name="doctors_title">👨‍⚕️ Doctores</string>
+    <string name="doctors_of">%1$s — Doctores</string>
+    <string name="search_doctor_hint">Buscar doctor…</string>
+
+    <!-- Estados vacíos -->
+    <string name="empty_title">Nada por aquí aún</string>
+    <string name="empty_subtitle">Agrega elementos para verlos en la lista.</string>
+    <string name="empty_action">Crear</string>
+</resources>
