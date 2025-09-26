@@ -2,6 +2,15 @@
 
     <!-- Tema de la app (Material 3, sin ActionBar porque usamos Toolbar en XML) -->
     <style name="Theme.MyApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/medical_primary</item>
+        <item name="colorOnPrimary">@color/medical_on_primary</item>
+        <item name="colorPrimaryContainer">@color/medical_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/medical_on_primary_container</item>
+        <item name="colorSecondary">@color/medical_secondary</item>
+        <item name="colorOnSecondary">@color/medical_on_secondary</item>
+        <item name="colorSurface">@color/medical_surface</item>
+        <item name="colorOnSurface">@color/medical_on_surface</item>
+        <item name="android:windowBackground">@color/medical_background</item>
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

@@ -12,14 +12,16 @@
     <string name="action_go_login">Ya tengo cuenta</string>
 
     <!-- Login -->
-    <string name="login_title">🔐 Inicia sesión</string>
+    <string name="login_title">Inicia sesión</string>
+    <string name="login_subtitle">Ingresa tus credenciales para continuar con tus citas.</string>
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
     <string name="login_hint_email">tucorreo@ejemplo.com</string>
     <string name="success_login">¡Hola, %1$s!</string>
 
     <!-- Registro -->
-    <string name="register_title">📝 Crear cuenta</string>
+    <string name="register_title">Crea tu cuenta</string>
+    <string name="register_subtitle">Completa tus datos para agendar y administrar tus consultas.</string>
     <string name="register_name">Nombre completo</string>
     <string name="register_repeat_password">Repite la contraseña</string>
     <string name="success_register">Cuenta creada correctamente. Ahora puedes iniciar sesión.</string>
