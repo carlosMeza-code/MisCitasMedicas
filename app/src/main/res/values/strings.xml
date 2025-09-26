@@ -16,11 +16,26 @@
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
     <string name="login_hint_email">tucorreo@ejemplo.com</string>
+    <string name="success_login">¡Hola, %1$s!</string>
 
     <!-- Registro -->
     <string name="register_title">📝 Crear cuenta</string>
     <string name="register_name">Nombre completo</string>
     <string name="register_repeat_password">Repite la contraseña</string>
+    <string name="success_register">Cuenta creada correctamente. Ahora puedes iniciar sesión.</string>
+
+    <!-- Mensajes de error -->
+    <string name="error_email_required">Ingresa tu correo electrónico.</string>
+    <string name="error_email_invalid">Ingresa un correo válido.</string>
+    <string name="error_password_required">Ingresa tu contraseña.</string>
+    <string name="error_password_length">La contraseña debe tener al menos 6 caracteres.</string>
+    <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
+    <string name="error_name_required">Ingresa tu nombre.</string>
+    <string name="error_user_not_found">No encontramos una cuenta registrada. Regístrate primero.</string>
+    <string name="error_credentials">Correo o contraseña incorrectos.</string>
+
+    <!-- Placeholders -->
+    <string name="placeholder_new_appointment">Funcionalidad en construcción 🛠️</string>
 
     <!-- Home -->
     <string name="home_title">🏠 Inicio</string>

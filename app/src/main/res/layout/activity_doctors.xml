@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/tvSpecialtyHeader"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="@string/doctors_of"
+            android:text="@string/doctors_title"
             android:textAppearance="?attr/textAppearanceTitleMedium" />
 
         <com.google.android.material.textfield.TextInputLayout
