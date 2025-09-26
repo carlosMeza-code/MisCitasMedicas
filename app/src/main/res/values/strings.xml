@@ -41,8 +41,8 @@
 
     <!-- Home -->
     <string name="home_title">🏠 Inicio</string>
-    <string name="home_cta_specialties">Ver especialidades</string>
-    <string name="home_cta_doctors">Ver doctores</string>
+    <string name="home_cta_specialties">🗂️ Ver especialidades</string>
+    <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
     <string name="home_cta_new_appointment">➕ Nueva cita</string>
 
     <!-- Especialidades -->

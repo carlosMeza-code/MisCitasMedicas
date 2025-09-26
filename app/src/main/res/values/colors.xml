@@ -3,15 +3,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="medical_primary">#0F8B8D</color>
+    <color name="medical_primary">#1B4965</color>
     <color name="medical_on_primary">#FFFFFFFF</color>
-    <color name="medical_primary_container">#A6E3E5</color>
-    <color name="medical_on_primary_container">#023436</color>
-    <color name="medical_secondary">#4FB3BF</color>
-    <color name="medical_on_secondary">#012A2E</color>
+    <color name="medical_primary_container">#D4E4F4</color>
+    <color name="medical_on_primary_container">#0F2D40</color>
+    <color name="medical_secondary">#5FA8D3</color>
+    <color name="medical_on_secondary">#082032</color>
     <color name="medical_surface">#FFFFFFFF</color>
-    <color name="medical_on_surface">#1C1F21</color>
-    <color name="medical_background">#F2FBFB</color>
-    <color name="medical_outline">#80C7C9</color>
-    <color name="medical_hint">#557A7B</color>
+    <color name="medical_on_surface">#1E293B</color>
+    <color name="medical_background">#F3F6FB</color>
+    <color name="medical_outline">#B7C7D6</color>
+    <color name="medical_hint">#64748B</color>
 </resources>
