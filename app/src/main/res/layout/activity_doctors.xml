@@ -1,37 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/medical_background">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-        android:title="@string/doctors_title"/>
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:title="@string/doctors_title"
+        app:titleTextColor="@color/medical_on_primary"/>
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical" android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSpecialtyHeader"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/doctors_title"
-            android:textAppearance="?attr/textAppearanceTitleMedium" />
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="@color/medical_primary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearchDoc"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_primary"
+            app:hintTextColor="@color/medical_hint">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSearchDoc"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:hint="@string/search_doctor_hint"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_doctor_hint"
+                android:textColor="@color/medical_on_surface"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDoctors"
-            android:layout_width="match_parent" android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </LinearLayout>

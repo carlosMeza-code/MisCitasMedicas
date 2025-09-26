@@ -2,6 +2,7 @@ package com.example.miscitasmedicas
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -18,7 +19,7 @@ class DoctorsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_doctors)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(com.google.android.material.R.drawable.mtrl_ic_arrow_back)
+        toolbar.navigationIcon = AppCompatResources.getDrawable(this, R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener { finish() }
 
         val specialtyName = intent.getStringExtra(EXTRA_SPECIALTY_NAME)
