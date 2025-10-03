@@ -7,28 +7,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.miscitasmedicas.databinding.FragmentNewAppointmentBinding
+import com.example.miscitasmedicas.R
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.LazyThreadSafetyMode
 
 class NewAppointmentFragment : Fragment() {
 
-    private var _binding: FragmentNewAppointmentBinding? = null
-    private val binding get() = _binding!!
     private var hostContext: Context? = null
 
     private val calendar: Calendar = Calendar.getInstance()
     private val appointmentStorage: AppointmentStorage by lazy(LazyThreadSafetyMode.NONE) {
         AppointmentStorage(requireContext().applicationContext)
     }
+
+    private var ui: UiElements? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,8 +55,22 @@ class NewAppointmentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         logLifecycle("onCreateView")
-        _binding = FragmentNewAppointmentBinding.inflate(inflater, container, false)
-        return binding.root
+        val view = inflater.inflate(R.layout.fragment_new_appointment, container, false)
+        ui = UiElements(
+            textFieldPatientName = view.findViewById(R.id.textFieldPatientName),
+            inputPatientName = view.findViewById(R.id.inputPatientName),
+            textFieldSpecialty = view.findViewById(R.id.textFieldSpecialty),
+            inputSpecialty = view.findViewById(R.id.inputSpecialty),
+            textFieldAppointmentDate = view.findViewById(R.id.textFieldAppointmentDate),
+            inputAppointmentDate = view.findViewById(R.id.inputAppointmentDate),
+            textFieldAppointmentTime = view.findViewById(R.id.textFieldAppointmentTime),
+            inputAppointmentTime = view.findViewById(R.id.inputAppointmentTime),
+            inputNotes = view.findViewById(R.id.inputNotes),
+            btnSchedule = view.findViewById(R.id.btnSchedule),
+            cardConfirmation = view.findViewById(R.id.cardConfirmation),
+            tvConfirmation = view.findViewById(R.id.tvConfirmation)
+        )
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +102,7 @@ class NewAppointmentFragment : Fragment() {
     override fun onDestroyView() {
         logLifecycle("onDestroyView")
         super.onDestroyView()
-        _binding = null
+        ui = null
     }
 
     override fun onDestroy() {
@@ -96,31 +117,33 @@ class NewAppointmentFragment : Fragment() {
     }
 
     private fun setupUi() {
+        val ui = ui ?: return
         val specialties = resources.getStringArray(R.array.new_appointment_specialties)
         val adapter = ArrayAdapter(
             hostContext ?: requireContext(),
             android.R.layout.simple_list_item_1,
             specialties
         )
-        binding.inputSpecialty.setAdapter(adapter)
-        binding.inputSpecialty.setOnItemClickListener { _, _, _, _ ->
-            binding.textFieldSpecialty.error = null
+        ui.inputSpecialty.setAdapter(adapter)
+        ui.inputSpecialty.setOnItemClickListener { _, _, _, _ ->
+            ui.textFieldSpecialty.error = null
         }
 
-        binding.inputAppointmentDate.setOnClickListener { showDatePicker() }
-        binding.inputAppointmentDate.setOnFocusChangeListener { _, hasFocus ->
+        ui.inputAppointmentDate.setOnClickListener { showDatePicker() }
+        ui.inputAppointmentDate.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) showDatePicker()
         }
 
-        binding.inputAppointmentTime.setOnClickListener { showTimePicker() }
-        binding.inputAppointmentTime.setOnFocusChangeListener { _, hasFocus ->
+        ui.inputAppointmentTime.setOnClickListener { showTimePicker() }
+        ui.inputAppointmentTime.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) showTimePicker()
         }
 
-        binding.btnSchedule.setOnClickListener { validateAndSchedule() }
+        ui.btnSchedule.setOnClickListener { validateAndSchedule() }
     }
 
     private fun showDatePicker() {
+        val ui = ui ?: return
         val picker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(getString(R.string.new_appointment_date_picker_title))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
@@ -135,14 +158,15 @@ class NewAppointmentFragment : Fragment() {
             calendar.set(Calendar.DAY_OF_MONTH, utcCalendar.get(Calendar.DAY_OF_MONTH))
 
             val formatter = SimpleDateFormat("dd 'de' MMMM yyyy", Locale.getDefault())
-            binding.inputAppointmentDate.setText(formatter.format(calendar.time))
-            binding.textFieldAppointmentDate.error = null
+            ui.inputAppointmentDate.setText(formatter.format(calendar.time))
+            ui.textFieldAppointmentDate.error = null
         }
 
         picker.show(parentFragmentManager, DATE_PICKER_TAG)
     }
 
     private fun showTimePicker() {
+        val ui = ui ?: return
         val picker = MaterialTimePicker.Builder()
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .setHour(calendar.get(Calendar.HOUR_OF_DAY))
@@ -155,49 +179,50 @@ class NewAppointmentFragment : Fragment() {
             calendar.set(Calendar.MINUTE, picker.minute)
 
             val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-            binding.inputAppointmentTime.setText(formatter.format(calendar.time))
-            binding.textFieldAppointmentTime.error = null
+            ui.inputAppointmentTime.setText(formatter.format(calendar.time))
+            ui.textFieldAppointmentTime.error = null
         }
 
         picker.show(parentFragmentManager, TIME_PICKER_TAG)
     }
 
     private fun validateAndSchedule() {
-        val name = binding.inputPatientName.text?.toString().orEmpty().trim()
-        val specialty = binding.inputSpecialty.text?.toString().orEmpty().trim()
-        val date = binding.inputAppointmentDate.text?.toString().orEmpty().trim()
-        val time = binding.inputAppointmentTime.text?.toString().orEmpty().trim()
-        val notes = binding.inputNotes.text?.toString().orEmpty().trim()
+        val ui = ui ?: return
+        val name = ui.inputPatientName.text?.toString().orEmpty().trim()
+        val specialty = ui.inputSpecialty.text?.toString().orEmpty().trim()
+        val date = ui.inputAppointmentDate.text?.toString().orEmpty().trim()
+        val time = ui.inputAppointmentTime.text?.toString().orEmpty().trim()
+        val notes = ui.inputNotes.text?.toString().orEmpty().trim()
 
-        binding.textFieldPatientName.error = if (name.isEmpty()) {
+        ui.textFieldPatientName.error = if (name.isEmpty()) {
             getString(R.string.error_name_required)
         } else {
             null
         }
 
-        binding.textFieldSpecialty.error = if (specialty.isEmpty()) {
+        ui.textFieldSpecialty.error = if (specialty.isEmpty()) {
             getString(R.string.new_appointment_error_specialty)
         } else {
             null
         }
 
-        binding.textFieldAppointmentDate.error = if (date.isEmpty()) {
+        ui.textFieldAppointmentDate.error = if (date.isEmpty()) {
             getString(R.string.new_appointment_error_date)
         } else {
             null
         }
 
-        binding.textFieldAppointmentTime.error = if (time.isEmpty()) {
+        ui.textFieldAppointmentTime.error = if (time.isEmpty()) {
             getString(R.string.new_appointment_error_time)
         } else {
             null
         }
 
         val hasError = listOf(
-            binding.textFieldPatientName.error,
-            binding.textFieldSpecialty.error,
-            binding.textFieldAppointmentDate.error,
-            binding.textFieldAppointmentTime.error
+            ui.textFieldPatientName.error,
+            ui.textFieldSpecialty.error,
+            ui.textFieldAppointmentDate.error,
+            ui.textFieldAppointmentTime.error
         ).any { it != null }
 
         if (hasError) {
@@ -228,9 +253,9 @@ class NewAppointmentFragment : Fragment() {
             )
         )
 
-        binding.cardConfirmation.visibility = View.VISIBLE
-        binding.tvConfirmation.text = summary
-        binding.cardConfirmation.setCardBackgroundColor(
+        ui.cardConfirmation.visibility = View.VISIBLE
+        ui.tvConfirmation.text = summary
+        ui.cardConfirmation.setCardBackgroundColor(
             ContextCompat.getColor(requireContext(), R.color.medical_primary_container)
         )
 
@@ -244,6 +269,21 @@ class NewAppointmentFragment : Fragment() {
     private fun logLifecycle(event: String) {
         Log.d(TAG, "🔁 $event — Fragment de nueva cita activo")
     }
+
+    private data class UiElements(
+        val textFieldPatientName: TextInputLayout,
+        val inputPatientName: TextInputEditText,
+        val textFieldSpecialty: TextInputLayout,
+        val inputSpecialty: MaterialAutoCompleteTextView,
+        val textFieldAppointmentDate: TextInputLayout,
+        val inputAppointmentDate: TextInputEditText,
+        val textFieldAppointmentTime: TextInputLayout,
+        val inputAppointmentTime: TextInputEditText,
+        val inputNotes: TextInputEditText,
+        val btnSchedule: MaterialButton,
+        val cardConfirmation: MaterialCardView,
+        val tvConfirmation: TextView
+    )
 
     companion object {
         private const val TAG = "NewAppointmentFragment"
