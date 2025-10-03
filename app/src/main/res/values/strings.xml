@@ -45,6 +45,25 @@
     <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
     <string name="home_cta_new_appointment">➕ Nueva cita</string>
 
+    <!-- Nueva cita -->
+    <string name="new_appointment_title">🗓️ Nueva cita</string>
+    <string name="new_appointment_subtitle">Organiza tu próxima consulta paso a paso.</string>
+    <string name="new_appointment_patient_name">👤 Nombre del paciente</string>
+    <string name="new_appointment_specialty">🩺 Especialidad</string>
+    <string name="new_appointment_date">📅 Fecha</string>
+    <string name="new_appointment_time">⏰ Hora</string>
+    <string name="new_appointment_notes">📝 Notas (opcional)</string>
+    <string name="new_appointment_action">Agendar cita ✨</string>
+    <string name="new_appointment_date_picker_title">Elige la fecha</string>
+    <string name="new_appointment_time_picker_title">Elige la hora</string>
+    <string name="new_appointment_error_specialty">Selecciona una especialidad.</string>
+    <string name="new_appointment_error_date">Selecciona una fecha.</string>
+    <string name="new_appointment_error_time">Selecciona una hora.</string>
+    <string name="new_appointment_error_form">Completa los campos obligatorios para continuar.</string>
+    <string name="new_appointment_confirmation">🎉 ¡Cita lista!&#x0A;Paciente: %1$s&#x0A;Especialidad: %2$s&#x0A;Fecha: %3$s&#x0A;Hora: %4$s&#x0A;Notas: %5$s</string>
+    <string name="new_appointment_no_notes">Sin notas adicionales.</string>
+    <string name="new_appointment_success_toast">✨ Cita creada con éxito. ¡Nos vemos pronto!</string>
+
     <!-- Especialidades -->
     <string name="specialties_title">🗂️ Especialidades</string>
     <string name="specialties_search_hint">Buscar especialidad…</string>

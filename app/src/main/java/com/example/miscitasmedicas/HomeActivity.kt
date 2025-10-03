@@ -2,7 +2,6 @@ package com.example.miscitasmedicas
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 
@@ -21,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         findViewById<MaterialButton>(R.id.btnNewAppointment).setOnClickListener {
-            Toast.makeText(this, R.string.placeholder_new_appointment, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, NewAppointmentActivity::class.java))
         }
     }
 }
