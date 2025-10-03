@@ -3,24 +3,33 @@ package com.example.miscitasmedicas
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import androidx.core.widget.NestedScrollView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.miscitasmedicas.databinding.ActivityAppointmentsBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.example.miscitasmedicas.databinding.ItemAppointmentBinding
 
 class AppointmentsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAppointmentsBinding
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var emptyState: View
+    private lateinit var scrollContent: NestedScrollView
+    private lateinit var listAppointments: LinearLayout
     private lateinit var storage: AppointmentStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAppointmentsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_appointments)
 
-        setSupportActionBar(binding.toolbar)
+        toolbar = findViewById(R.id.toolbar)
+        emptyState = findViewById(R.id.emptyState)
+        scrollContent = findViewById(R.id.scrollContent)
+        listAppointments = findViewById(R.id.listAppointments)
+
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.appointments_title)
-        binding.toolbar.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -34,20 +43,20 @@ class AppointmentsActivity : AppCompatActivity() {
 
     private fun renderAppointments() {
         val appointments = storage.getAppointments()
-        binding.listAppointments.removeAllViews()
+        listAppointments.removeAllViews()
 
         if (appointments.isEmpty()) {
-            binding.emptyState.visibility = View.VISIBLE
-            binding.scrollContent.visibility = View.GONE
+            emptyState.visibility = View.VISIBLE
+            scrollContent.visibility = View.GONE
             return
         }
 
-        binding.emptyState.visibility = View.GONE
-        binding.scrollContent.visibility = View.VISIBLE
+        emptyState.visibility = View.GONE
+        scrollContent.visibility = View.VISIBLE
 
         val inflater = LayoutInflater.from(this)
         appointments.forEach { appointment ->
-            val itemBinding = ItemAppointmentBinding.inflate(inflater, binding.listAppointments, false)
+            val itemBinding = ItemAppointmentBinding.inflate(inflater, listAppointments, false)
             itemBinding.tvPatientName.text = getString(
                 R.string.appointments_patient_name,
                 appointment.patientName
@@ -68,7 +77,7 @@ class AppointmentsActivity : AppCompatActivity() {
             }
             itemBinding.tvNotes.text = notesText
 
-            binding.listAppointments.addView(itemBinding.root)
+            listAppointments.addView(itemBinding.root)
         }
     }
 }
