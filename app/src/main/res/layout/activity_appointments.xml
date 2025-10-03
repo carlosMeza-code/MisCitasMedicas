@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/medical_background"
-        android:navigationIconTint="@color/medical_on_surface"
+        app:navigationIconTint="@color/medical_on_surface"
         app:titleTextColor="@color/medical_on_surface" />
 
     <LinearLayout
