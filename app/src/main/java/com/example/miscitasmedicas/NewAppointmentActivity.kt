@@ -2,28 +2,26 @@ package com.example.miscitasmedicas
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
-import com.example.miscitasmedicas.databinding.ActivityNewAppointmentBinding
+import com.google.android.material.appbar.MaterialToolbar
 
 class NewAppointmentActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityNewAppointmentBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNewAppointmentBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_new_appointment)
 
-        setSupportActionBar(binding.toolbar)
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.new_appointment_title)
 
-        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                replace(R.id.fragmentContainer, NewAppointmentFragment.newInstance())
-            }
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, NewAppointmentFragment.newInstance())
+                .commit()
         }
     }
 }
