@@ -48,7 +48,7 @@
             android:hint="@string/new_appointment_specialty"
             app:boxStrokeColor="@color/medical_outline"
             app:hintTextColor="@color/medical_hint"
-            app:endIconMode="dropdown">
+            app:endIconMode="dropdown_menu">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/inputSpecialty"
