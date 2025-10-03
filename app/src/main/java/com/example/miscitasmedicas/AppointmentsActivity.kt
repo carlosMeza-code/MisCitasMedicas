@@ -62,23 +62,24 @@ class AppointmentsActivity : AppCompatActivity() {
             val tvDateTime = itemView.findViewById<TextView>(R.id.tvDateTime)
             val tvNotes = itemView.findViewById<TextView>(R.id.tvNotes)
 
-            tvPatientName.text = getString(
-                R.string.appointments_patient_name,
-                appointment.patientName
-            )
-            tvSpecialty.text = getString(
-                R.string.appointments_specialty,
-                appointment.specialty
-            )
-            tvDateTime.text = getString(
-                R.string.appointments_date_time,
-                appointment.date,
-                appointment.time
-            )
+            tvPatientName.text = getString(R.string.appointments_patient_name) +
+                " " + appointment.patientName
+            tvSpecialty.text = getString(R.string.appointments_specialty) +
+                " " + appointment.specialty
+            val dateTimeText = buildString {
+                append(getString(R.string.appointments_date))
+                append(' ')
+                append(appointment.date)
+                append(" • ")
+                append(getString(R.string.appointments_time))
+                append(' ')
+                append(appointment.time)
+            }
+            tvDateTime.text = dateTimeText
             val notesText = if (appointment.notes.isBlank()) {
                 getString(R.string.appointments_notes_empty)
             } else {
-                getString(R.string.appointments_notes, appointment.notes)
+                getString(R.string.appointments_notes) + " " + appointment.notes
             }
             tvNotes.text = notesText
 

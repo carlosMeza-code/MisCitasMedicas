@@ -70,10 +70,11 @@
     <string name="appointments_empty_title">Aún no tienes citas guardadas.</string>
     <string name="appointments_empty_subtitle">Agenda una nueva cita y aparecerá en esta lista automáticamente.</string>
     <string name="appointments_list_content_description">Lista de citas médicas programadas.</string>
-    <string name="appointments_patient_name">👤 Paciente: %1$s</string>
-    <string name="appointments_specialty">🩺 Especialidad: %1$s</string>
-    <string name="appointments_date_time">📅 %1$s • ⏰ %2$s</string>
-    <string name="appointments_notes">📝 Notas: %1$s</string>
+    <string name="appointments_patient_name">👤 Paciente:</string>
+    <string name="appointments_specialty">🩺 Especialidad:</string>
+    <string name="appointments_date">📅</string>
+    <string name="appointments_time">⏰</string>
+    <string name="appointments_notes">📝 Notas:</string>
     <string name="appointments_notes_empty">📝 Sin notas adicionales.</string>
 
     <!-- Especialidades -->
