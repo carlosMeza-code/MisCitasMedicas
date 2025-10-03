@@ -12,6 +12,7 @@
         android:theme="@style/Theme.MyApp">
 
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".AppointmentsActivity" />
         <activity android:name=".NewAppointmentActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SpecialtiesActivity" />
