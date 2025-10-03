@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.widget.NestedScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.MaterialToolbar
-import com.example.miscitasmedicas.databinding.ItemAppointmentBinding
 
 class AppointmentsActivity : AppCompatActivity() {
 
@@ -56,16 +56,21 @@ class AppointmentsActivity : AppCompatActivity() {
 
         val inflater = LayoutInflater.from(this)
         appointments.forEach { appointment ->
-            val itemBinding = ItemAppointmentBinding.inflate(inflater, listAppointments, false)
-            itemBinding.tvPatientName.text = getString(
+            val itemView = inflater.inflate(R.layout.item_appointment, listAppointments, false)
+            val tvPatientName = itemView.findViewById<TextView>(R.id.tvPatientName)
+            val tvSpecialty = itemView.findViewById<TextView>(R.id.tvSpecialty)
+            val tvDateTime = itemView.findViewById<TextView>(R.id.tvDateTime)
+            val tvNotes = itemView.findViewById<TextView>(R.id.tvNotes)
+
+            tvPatientName.text = getString(
                 R.string.appointments_patient_name,
                 appointment.patientName
             )
-            itemBinding.tvSpecialty.text = getString(
+            tvSpecialty.text = getString(
                 R.string.appointments_specialty,
                 appointment.specialty
             )
-            itemBinding.tvDateTime.text = getString(
+            tvDateTime.text = getString(
                 R.string.appointments_date_time,
                 appointment.date,
                 appointment.time
@@ -75,9 +80,9 @@ class AppointmentsActivity : AppCompatActivity() {
             } else {
                 getString(R.string.appointments_notes, appointment.notes)
             }
-            itemBinding.tvNotes.text = notesText
+            tvNotes.text = notesText
 
-            listAppointments.addView(itemBinding.root)
+            listAppointments.addView(itemView)
         }
     }
 }
