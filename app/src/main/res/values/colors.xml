@@ -11,6 +11,7 @@
     <color name="medical_on_secondary">#082032</color>
     <color name="medical_surface">#FFFFFFFF</color>
     <color name="medical_on_surface">#1E293B</color>
+    <color name="medical_on_surface_variant">#475569</color>
     <color name="medical_background">#F3F6FB</color>
     <color name="medical_outline">#B7C7D6</color>
     <color name="medical_hint">#64748B</color>

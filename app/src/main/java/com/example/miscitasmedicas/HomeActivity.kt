@@ -22,5 +22,9 @@ class HomeActivity : AppCompatActivity() {
         findViewById<MaterialButton>(R.id.btnNewAppointment).setOnClickListener {
             startActivity(Intent(this, NewAppointmentActivity::class.java))
         }
+
+        findViewById<MaterialButton>(R.id.btnAppointments).setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
+        }
     }
 }

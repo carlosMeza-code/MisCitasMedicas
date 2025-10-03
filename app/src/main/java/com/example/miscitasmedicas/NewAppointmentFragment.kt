@@ -26,6 +26,9 @@ class NewAppointmentFragment : Fragment() {
     private var hostContext: Context? = null
 
     private val calendar: Calendar = Calendar.getInstance()
+    private val appointmentStorage: AppointmentStorage by lazy(LazyThreadSafetyMode.NONE) {
+        AppointmentStorage(requireContext().applicationContext)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -213,6 +216,16 @@ class NewAppointmentFragment : Fragment() {
             date,
             time,
             if (notes.isEmpty()) getString(R.string.new_appointment_no_notes) else notes
+        )
+
+        appointmentStorage.saveAppointment(
+            Appointment(
+                patientName = name,
+                specialty = specialty,
+                date = date,
+                time = time,
+                notes = notes
+            )
         )
 
         binding.cardConfirmation.visibility = View.VISIBLE

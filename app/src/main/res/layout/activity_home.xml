@@ -49,4 +49,18 @@
         app:cornerRadius="16dp"
         app:layout_constraintTop_toBottomOf="@id/btnToDoctors"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAppointments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/medical_primary_container"
+        android:text="@string/home_cta_appointments"
+        android:textColor="@color/medical_on_primary_container"
+        android:textStyle="bold"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnNewAppointment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

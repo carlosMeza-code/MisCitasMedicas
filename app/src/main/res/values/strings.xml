@@ -44,6 +44,7 @@
     <string name="home_cta_specialties">🗂️ Ver especialidades</string>
     <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
     <string name="home_cta_new_appointment">➕ Nueva cita</string>
+    <string name="home_cta_appointments">📘 Mis citas guardadas</string>
 
     <!-- Nueva cita -->
     <string name="new_appointment_title">🗓️ Nueva cita</string>
@@ -62,7 +63,17 @@
     <string name="new_appointment_error_form">Completa los campos obligatorios para continuar.</string>
     <string name="new_appointment_confirmation">🎉 ¡Cita lista!&#x0A;Paciente: %1$s&#x0A;Especialidad: %2$s&#x0A;Fecha: %3$s&#x0A;Hora: %4$s&#x0A;Notas: %5$s</string>
     <string name="new_appointment_no_notes">Sin notas adicionales.</string>
-    <string name="new_appointment_success_toast">✨ Cita creada con éxito. ¡Nos vemos pronto!</string>
+    <string name="new_appointment_success_toast">✨ Cita creada y guardada con éxito. ¡Nos vemos pronto!</string>
+
+    <!-- Citas guardadas -->
+    <string name="appointments_title">📘 Mis citas</string>
+    <string name="appointments_empty_title">Aún no tienes citas guardadas.</string>
+    <string name="appointments_empty_subtitle">Agenda una nueva cita y aparecerá en esta lista automáticamente.</string>
+    <string name="appointments_patient_name">👤 Paciente: %1$s</string>
+    <string name="appointments_specialty">🩺 Especialidad: %1$s</string>
+    <string name="appointments_date_time">📅 %1$s • ⏰ %2$s</string>
+    <string name="appointments_notes">📝 Notas: %1$s</string>
+    <string name="appointments_notes_empty">📝 Sin notas adicionales.</string>
 
     <!-- Especialidades -->
     <string name="specialties_title">🗂️ Especialidades</string>
