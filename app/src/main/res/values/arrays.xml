@@ -7,4 +7,20 @@
         <item>Dermatología</item>
         <item>Odontología</item>
     </string-array>
+
+    <string-array name="medical_emergency_areas">
+        <item>Emergencias generales</item>
+        <item>Cardiología</item>
+        <item>Traumatología</item>
+        <item>Neurología</item>
+        <item>Pediatría</item>
+        <item>Gineco-obstetricia</item>
+        <item>Cuidados intensivos</item>
+    </string-array>
+
+    <string-array name="medical_emergency_priorities">
+        <item>Estable</item>
+        <item>Urgencia moderada</item>
+        <item>Emergencia crítica</item>
+    </string-array>
 </resources>
