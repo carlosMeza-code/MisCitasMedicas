@@ -2,7 +2,13 @@ package com.example.miscitasmedicas
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Patterns
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -17,7 +23,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPassword: TextInputEditText
     private lateinit var btnLogin: MaterialButton
     private lateinit var btnGoRegister: MaterialButton
+    private lateinit var loadingOverlay: View
+    private lateinit var overlayLogo: ImageView
     private lateinit var sessionManager: SessionManager
+    private lateinit var pulseAnimation: Animation
+    private val handler = Handler(Looper.getMainLooper())
+    private var pendingNavigation: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         bindViews()
         setupListeners()
+        pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse)
     }
 
     private fun bindViews() {
@@ -35,6 +47,8 @@ class LoginActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
         btnGoRegister = findViewById(R.id.btnGoRegister)
+        loadingOverlay = findViewById(R.id.loadingOverlay)
+        overlayLogo = findViewById(R.id.ivOverlayLogo)
     }
 
     private fun setupListeners() {
@@ -45,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleLogin() {
+        pendingNavigation?.let { handler.removeCallbacks(it) }
         clearErrors()
         val email = etEmail.text?.toString()?.trim().orEmpty()
         val password = etPassword.text?.toString()?.trim().orEmpty()
@@ -73,9 +88,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         if (email.equals(user.email, ignoreCase = true) && password == user.password) {
-            Toast.makeText(this, getString(R.string.success_login, user.name), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            showLoadingOverlay()
+            btnLogin.isEnabled = false
+            pendingNavigation = Runnable {
+                Toast.makeText(this, getString(R.string.success_login, user.name), Toast.LENGTH_SHORT).show()
+                hideLoadingOverlay()
+                btnLogin.isEnabled = true
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            }.also { handler.postDelayed(it, 1200) }
         } else {
             tilPassword.error = getString(R.string.error_credentials)
         }
@@ -84,5 +105,20 @@ class LoginActivity : AppCompatActivity() {
     private fun clearErrors() {
         tilEmail.error = null
         tilPassword.error = null
+    }
+
+    private fun showLoadingOverlay() {
+        loadingOverlay.visibility = View.VISIBLE
+        overlayLogo.startAnimation(pulseAnimation)
+    }
+
+    private fun hideLoadingOverlay() {
+        overlayLogo.clearAnimation()
+        loadingOverlay.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pendingNavigation?.let { handler.removeCallbacks(it) }
     }
 }
