@@ -1,17 +1,28 @@
 package com.example.miscitasmedicas
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.miscitasmedicas.databinding.ActivityMedicalEmergencyBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.core.widget.doAfterTextChanged
+import android.media.MediaPlayer
 
 class MedicalEmergencyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMedicalEmergencyBinding
+    private var emergencySoundPlayer: MediaPlayer? = null
+    private val emergencySoundResId: Int by lazy {
+        val resourceName = getString(R.string.medical_emergency_sound_res_name)
+            .removeSuffix(".mp3")
+        val rawResId = resources.getIdentifier(resourceName, "raw", packageName)
+        if (rawResId != 0) {
+            rawResId
+        } else {
+            resources.getIdentifier(resourceName, "drawable", packageName)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,9 +131,39 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         }
 
         binding.btnCallEmergency.setOnClickListener {
-            val emergencyTrack = Uri.parse("https://open.spotify.com/track/3q7Ima7PlX2kb20zu0f8MU")
-            val intent = Intent(Intent.ACTION_VIEW, emergencyTrack)
-            startActivity(intent)
+            playEmergencySound()
         }
+    }
+
+    private fun playEmergencySound() {
+        if (emergencySoundResId == 0) {
+            Toast.makeText(
+                this,
+                R.string.medical_emergency_sound_not_found,
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val player = emergencySoundPlayer ?: MediaPlayer.create(this, emergencySoundResId)
+            .also { emergencySoundPlayer = it }
+
+        player.seekTo(0)
+        player.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        emergencySoundPlayer?.takeIf { it.isPlaying }?.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseEmergencySound()
+    }
+
+    private fun releaseEmergencySound() {
+        emergencySoundPlayer?.release()
+        emergencySoundPlayer = null
     }
 }
