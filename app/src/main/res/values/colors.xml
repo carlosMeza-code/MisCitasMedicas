@@ -15,4 +15,6 @@
     <color name="medical_background">#F3F6FB</color>
     <color name="medical_outline">#B7C7D6</color>
     <color name="medical_hint">#64748B</color>
+    <color name="medical_emergency">#D64545</color>
+    <color name="medical_on_emergency">#FFFFFFFF</color>
 </resources>
