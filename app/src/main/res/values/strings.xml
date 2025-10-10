@@ -57,6 +57,8 @@
     <string name="medical_emergency_notes_hint">Notas clínicas relevantes (alergias, tratamientos, signos vitales, etc.)</string>
     <string name="medical_emergency_submit">Registrar solicitud</string>
     <string name="medical_emergency_call">📞 Llamada de emergencia</string>
+    <string name="medical_emergency_sound_res_name">emergency_alert</string>
+    <string name="medical_emergency_sound_not_found">No se encontró el tono de emergencia.</string>
     <string name="medical_emergency_error_area">Selecciona el área que brindará la atención.</string>
     <string name="medical_emergency_error_priority">Indica el nivel de severidad del caso.</string>
     <string name="medical_emergency_error_location">Especifica la ubicación del paciente.</string>
