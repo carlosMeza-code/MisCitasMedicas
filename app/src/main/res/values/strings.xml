@@ -45,6 +45,7 @@
     <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
     <string name="home_cta_new_appointment">➕ Nueva cita</string>
     <string name="home_cta_appointments">📘 Mis citas guardadas</string>
+    <string name="home_cta_emergency">🚨 Emergencia médica</string>
 
     <!-- Nueva cita -->
     <string name="new_appointment_title">🗓️ Nueva cita</string>
