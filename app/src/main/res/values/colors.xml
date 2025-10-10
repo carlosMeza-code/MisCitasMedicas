@@ -17,4 +17,6 @@
     <color name="medical_hint">#64748B</color>
     <color name="medical_emergency">#D64545</color>
     <color name="medical_on_emergency">#FFFFFFFF</color>
+    <color name="login_background_scrim">#B31B4965</color>
+    <color name="login_overlay_background">#E61B4965</color>
 </resources>
