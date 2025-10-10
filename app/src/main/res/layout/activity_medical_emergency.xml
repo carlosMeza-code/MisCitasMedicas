@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/medical_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:navigationIcon="@drawable/ic_arrow_back"
+            android:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
+            app:title="@string/medical_emergency_title"
+            app:titleTextColor="@color/medical_on_surface" />
+
+        <TextView
+            android:id="@+id/tvEmergencyDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/medical_emergency_description"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="@color/medical_on_surface" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmergencyArea"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/medical_emergency_area_hint"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_primary"
+            app:hintTextColor="@color/medical_on_surface">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/inputEmergencyArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:importantForAutofill="no"
+                android:textColor="@color/medical_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmergencyPriority"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/medical_emergency_priority_hint"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_secondary"
+            app:hintTextColor="@color/medical_on_surface">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/inputEmergencyPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:importantForAutofill="no"
+                android:textColor="@color/medical_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutLocation"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/medical_emergency_location_hint"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_primary"
+            app:hintTextColor="@color/medical_on_surface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:maxLines="3"
+                android:textColor="@color/medical_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutContactNumber"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/medical_emergency_contact_hint"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_primary"
+            app:hintTextColor="@color/medical_on_surface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:textColor="@color/medical_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAdditionalNotes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/medical_emergency_notes_hint"
+            app:boxBackgroundColor="@color/medical_surface"
+            app:boxStrokeColor="@color/medical_secondary"
+            app:hintTextColor="@color/medical_on_surface">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputAdditionalNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="3"
+                android:textColor="@color/medical_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/medical_primary"
+            android:text="@string/medical_emergency_submit"
+            android:textAllCaps="false"
+            android:textColor="@color/medical_on_primary"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconTint="@color/medical_on_primary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCallEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/medical_emergency"
+            android:text="@string/medical_emergency_call"
+            android:textAllCaps="false"
+            android:textColor="@color/medical_on_emergency"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_phone"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconTint="@color/medical_on_emergency" />
+
+    </LinearLayout>
+</ScrollView>

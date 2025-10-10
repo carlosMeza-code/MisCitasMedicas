@@ -14,6 +14,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AppointmentsActivity" />
         <activity android:name=".NewAppointmentActivity" />
+        <activity android:name=".MedicalEmergencyActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SpecialtiesActivity" />
         <activity android:name=".DoctorsActivity" />
