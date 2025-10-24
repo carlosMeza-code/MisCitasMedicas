@@ -27,23 +27,28 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMedicalEmergencyBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var emergencySoundPlayer: MediaPlayer? = null
-    private val locationCancellationToken = CancellationTokenSource()
+    private var locationCancellationToken: CancellationTokenSource? = null
     private var googleMap: GoogleMap? = null
     private var lastKnownLatLng: LatLng? = null
+    private var lastLocationRequestUserInitiated = false
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             if (granted) {
                 enableMyLocationLayer()
-                fetchCurrentLocation()
+                fetchCurrentLocation(lastLocationRequestUserInitiated)
             } else {
+                if (lastLocationRequestUserInitiated) {
+                    restoreLocationButtonState()
+                }
                 Toast.makeText(
                     this,
                     R.string.medical_emergency_location_permission_denied,
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            lastLocationRequestUserInitiated = false
         }
     private val emergencySoundResId: Int by lazy {
         val resourceName = getString(R.string.medical_emergency_sound_res_name)
@@ -72,6 +77,7 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
         configureFieldValidation()
         initializeMap(savedInstanceState)
         configureActions()
+        fetchCurrentLocation(userInitiated = false)
     }
 
     private fun configureDropdowns() {
@@ -191,8 +197,9 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
         player.start()
     }
 
-    private fun fetchCurrentLocation() {
+    private fun fetchCurrentLocation(userInitiated: Boolean = true) {
         if (!hasLocationPermission()) {
+            lastLocationRequestUserInitiated = userInitiated
             locationPermissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -202,11 +209,20 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
 
-        binding.btnUseCurrentLocation.isEnabled = false
-        binding.btnUseCurrentLocation.text = getString(R.string.medical_emergency_fetching_location)
+        lastLocationRequestUserInitiated = false
+
+        if (userInitiated) {
+            binding.btnUseCurrentLocation.isEnabled = false
+            binding.btnUseCurrentLocation.text = getString(R.string.medical_emergency_fetching_location)
+        }
+
+        locationCancellationToken?.cancel()
+        val newCancellationToken = CancellationTokenSource().also {
+            locationCancellationToken = it
+        }
 
         fusedLocationClient
-            .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, locationCancellationToken.token)
+            .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, newCancellationToken.token)
             .addOnSuccessListener { location ->
                 if (location != null) {
                     val latitude = location.latitude
@@ -237,7 +253,12 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
                 ).show()
             }
             .addOnCompleteListener {
-                restoreLocationButtonState()
+                if (userInitiated) {
+                    restoreLocationButtonState()
+                }
+                if (locationCancellationToken == newCancellationToken) {
+                    locationCancellationToken = null
+                }
             }
     }
 
@@ -306,7 +327,8 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         binding.mapEmergencyLocation.onDestroy()
-        locationCancellationToken.cancel()
+        locationCancellationToken?.cancel()
+        locationCancellationToken = null
         releaseEmergencySound()
     }
 
