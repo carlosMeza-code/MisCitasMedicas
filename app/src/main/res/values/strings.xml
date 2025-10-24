@@ -57,6 +57,11 @@
     <string name="medical_emergency_notes_hint">Notas clínicas relevantes (alergias, tratamientos, signos vitales, etc.)</string>
     <string name="medical_emergency_submit">Registrar solicitud</string>
     <string name="medical_emergency_call">📞 Llamada de emergencia</string>
+    <string name="medical_emergency_use_current_location">📍 Usar mi ubicación actual</string>
+    <string name="medical_emergency_fetching_location">Obteniendo ubicación…</string>
+    <string name="medical_emergency_location_unavailable">No fue posible obtener tu ubicación. Intenta nuevamente.</string>
+    <string name="medical_emergency_location_permission_denied">No podemos obtener tu ubicación sin permisos.</string>
+    <string name="medical_emergency_location_format">Lat: %1$.5f, Lon: %2$.5f</string>
     <string name="medical_emergency_sound_res_name">llamada_de_emergencia</string>
     <string name="medical_emergency_sound_not_found">No se encontró el tono de emergencia.</string>
     <string name="medical_emergency_error_area">Selecciona el área que brindará la atención.</string>

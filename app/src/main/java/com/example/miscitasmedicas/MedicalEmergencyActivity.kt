@@ -1,18 +1,42 @@
 package com.example.miscitasmedicas
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.miscitasmedicas.databinding.ActivityMedicalEmergencyBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import android.media.MediaPlayer
+import com.example.miscitasmedicas.databinding.ActivityMedicalEmergencyBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MedicalEmergencyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMedicalEmergencyBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var emergencySoundPlayer: MediaPlayer? = null
+    private val locationCancellationToken = CancellationTokenSource()
+    private val locationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+            if (granted) {
+                fetchCurrentLocation()
+            } else {
+                Toast.makeText(
+                    this,
+                    R.string.medical_emergency_location_permission_denied,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     private val emergencySoundResId: Int by lazy {
         val resourceName = getString(R.string.medical_emergency_sound_res_name)
             .removeSuffix(".mp3")
@@ -28,6 +52,8 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMedicalEmergencyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -133,6 +159,10 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         binding.btnCallEmergency.setOnClickListener {
             playEmergencySound()
         }
+
+        binding.btnUseCurrentLocation.setOnClickListener {
+            fetchCurrentLocation()
+        }
     }
 
     private fun playEmergencySound() {
@@ -152,6 +182,69 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         player.start()
     }
 
+    private fun fetchCurrentLocation() {
+        if (!hasLocationPermission()) {
+            locationPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+            return
+        }
+
+        binding.btnUseCurrentLocation.isEnabled = false
+        binding.btnUseCurrentLocation.text = getString(R.string.medical_emergency_fetching_location)
+
+        fusedLocationClient
+            .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, locationCancellationToken.token)
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    val locationText = getString(
+                        R.string.medical_emergency_location_format,
+                        location.latitude,
+                        location.longitude
+                    )
+                    binding.inputLocation.setText(locationText)
+                    binding.inputLocation.setSelection(locationText.length)
+                    binding.layoutLocation.error = null
+                } else {
+                    Toast.makeText(
+                        this,
+                        R.string.medical_emergency_location_unavailable,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    R.string.medical_emergency_location_unavailable,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnCompleteListener {
+                restoreLocationButtonState()
+            }
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        val fineLocationGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val coarseLocationGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        return fineLocationGranted || coarseLocationGranted
+    }
+
+    private fun restoreLocationButtonState() {
+        binding.btnUseCurrentLocation.isEnabled = true
+        binding.btnUseCurrentLocation.text = getString(R.string.medical_emergency_use_current_location)
+    }
+
     override fun onStop() {
         super.onStop()
         emergencySoundPlayer?.takeIf { it.isPlaying }?.pause()
@@ -159,6 +252,7 @@ class MedicalEmergencyActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        locationCancellationToken.cancel()
         releaseEmergencySound()
     }
 
