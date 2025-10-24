@@ -1,8 +1,11 @@
 package com.example.miscitasmedicas
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -77,6 +80,7 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
         configureFieldValidation()
         initializeMap(savedInstanceState)
         configureActions()
+        updateOpenMapsButtonState()
         fetchCurrentLocation(userInitiated = false)
     }
 
@@ -105,6 +109,7 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun configureFieldValidation() {
         binding.inputLocation.doAfterTextChanged {
             binding.layoutLocation.error = null
+            updateOpenMapsButtonState()
         }
 
         binding.inputContactNumber.doAfterTextChanged {
@@ -173,6 +178,13 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.btnCallEmergency.setOnClickListener {
             playEmergencySound()
+        }
+
+        binding.btnOpenInMaps.setOnClickListener {
+            val latLng = currentLatLngForMaps()
+            if (latLng != null) {
+                openLocationInGoogleMaps(latLng)
+            }
         }
 
         binding.btnUseCurrentLocation.setOnClickListener {
@@ -296,6 +308,7 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun showLocationOnMap(latLng: LatLng) {
         lastKnownLatLng = latLng
+        updateOpenMapsButtonState()
         googleMap?.let { map ->
             map.clear()
             map.addMarker(
@@ -365,8 +378,43 @@ class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
         emergencySoundPlayer = null
     }
 
+    private fun updateOpenMapsButtonState() {
+        binding.btnOpenInMaps.isEnabled = currentLatLngForMaps() != null
+    }
+
+    private fun currentLatLngForMaps(): LatLng? {
+        return lastKnownLatLng ?: parseLatLngFromText(binding.inputLocation.text)
+    }
+
+    private fun parseLatLngFromText(text: CharSequence?): LatLng? {
+        if (text.isNullOrBlank()) return null
+        val matches = LAT_LNG_REGEX.findAll(text)
+            .mapNotNull { it.value.toDoubleOrNull() }
+            .toList()
+        if (matches.size < 2) return null
+        val latitude = matches[0]
+        val longitude = matches[1]
+        if (latitude !in -90.0..90.0 || longitude !in -180.0..180.0) return null
+        return LatLng(latitude, longitude)
+    }
+
+    private fun openLocationInGoogleMaps(latLng: LatLng) {
+        val mapsUri = Uri.parse("https://www.google.com/maps/search/?api=1&query=${latLng.latitude},${latLng.longitude}")
+        val intent = Intent(Intent.ACTION_VIEW, mapsUri)
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            Toast.makeText(
+                this,
+                R.string.medical_emergency_open_in_maps_error,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     companion object {
         private const val MAP_VIEW_BUNDLE_KEY = "medicalEmergencyMapViewBundle"
         private const val DEFAULT_MAP_ZOOM = 16f
+        private val LAT_LNG_REGEX = Regex("-?\\d+(?:\\.\\d+)?")
     }
 }
