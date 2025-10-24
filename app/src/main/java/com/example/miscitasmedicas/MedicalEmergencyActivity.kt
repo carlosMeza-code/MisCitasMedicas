@@ -16,18 +16,26 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class MedicalEmergencyActivity : AppCompatActivity() {
+class MedicalEmergencyActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityMedicalEmergencyBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var emergencySoundPlayer: MediaPlayer? = null
     private val locationCancellationToken = CancellationTokenSource()
+    private var googleMap: GoogleMap? = null
+    private var lastKnownLatLng: LatLng? = null
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             if (granted) {
+                enableMyLocationLayer()
                 fetchCurrentLocation()
             } else {
                 Toast.makeText(
@@ -62,6 +70,7 @@ class MedicalEmergencyActivity : AppCompatActivity() {
 
         configureDropdowns()
         configureFieldValidation()
+        initializeMap(savedInstanceState)
         configureActions()
     }
 
@@ -200,14 +209,18 @@ class MedicalEmergencyActivity : AppCompatActivity() {
             .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, locationCancellationToken.token)
             .addOnSuccessListener { location ->
                 if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
                     val locationText = getString(
                         R.string.medical_emergency_location_format,
-                        location.latitude,
-                        location.longitude
+                        latitude,
+                        longitude
                     )
                     binding.inputLocation.setText(locationText)
                     binding.inputLocation.setSelection(locationText.length)
                     binding.layoutLocation.error = null
+                    showLocationOnMap(LatLng(latitude, longitude))
+                    enableMyLocationLayer()
                 } else {
                     Toast.makeText(
                         this,
@@ -245,19 +258,93 @@ class MedicalEmergencyActivity : AppCompatActivity() {
         binding.btnUseCurrentLocation.text = getString(R.string.medical_emergency_use_current_location)
     }
 
+    private fun initializeMap(savedInstanceState: Bundle?) {
+        val mapViewBundle = savedInstanceState?.getBundle(MAP_VIEW_BUNDLE_KEY)
+        binding.mapEmergencyLocation.onCreate(mapViewBundle)
+        binding.mapEmergencyLocation.getMapAsync(this)
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        googleMap = map.apply {
+            uiSettings.isZoomControlsEnabled = true
+            uiSettings.isMapToolbarEnabled = false
+        }
+        enableMyLocationLayer()
+        lastKnownLatLng?.let { showLocationOnMap(it) }
+    }
+
+    private fun showLocationOnMap(latLng: LatLng) {
+        lastKnownLatLng = latLng
+        googleMap?.let { map ->
+            map.clear()
+            map.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .title(getString(R.string.medical_emergency_map_marker_title))
+            )
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_MAP_ZOOM))
+        }
+    }
+
+    private fun enableMyLocationLayer() {
+        if (!hasLocationPermission()) return
+        googleMap?.let { map ->
+            try {
+                map.isMyLocationEnabled = true
+            } catch (_: SecurityException) {
+                // Ignore the exception since permission was checked before enabling the layer
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
+        binding.mapEmergencyLocation.onStop()
         emergencySoundPlayer?.takeIf { it.isPlaying }?.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.mapEmergencyLocation.onDestroy()
         locationCancellationToken.cancel()
         releaseEmergencySound()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.mapEmergencyLocation.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.mapEmergencyLocation.onResume()
+    }
+
+    override fun onPause() {
+        binding.mapEmergencyLocation.onPause()
+        super.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        binding.mapEmergencyLocation.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY) ?: Bundle().also {
+            outState.putBundle(MAP_VIEW_BUNDLE_KEY, it)
+        }
+        binding.mapEmergencyLocation.onSaveInstanceState(mapViewBundle)
     }
 
     private fun releaseEmergencySound() {
         emergencySoundPlayer?.release()
         emergencySoundPlayer = null
+    }
+
+    companion object {
+        private const val MAP_VIEW_BUNDLE_KEY = "medicalEmergencyMapViewBundle"
+        private const val DEFAULT_MAP_ZOOM = 16f
     }
 }

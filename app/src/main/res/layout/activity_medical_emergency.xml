@@ -98,6 +98,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapEmergencyLocation"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/medical_emergency_map_description"
+            app:liteMode="true" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUseCurrentLocation"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
