@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.miscitasmedicas">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -21,6 +23,10 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".SpecialtiesActivity" />
         <activity android:name=".DoctorsActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <!-- Si tu app apunta a targetSdk 31+ (Android 12+), cualquier Activity
              con intent-filters DEBE declarar android:exported -->
