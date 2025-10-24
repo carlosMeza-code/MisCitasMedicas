@@ -106,6 +106,30 @@
             android:contentDescription="@string/medical_emergency_map_description"
             app:liteMode="true" />
 
+        <TextView
+            android:id="@+id/textMapFallbackMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/medical_emergency_map_fallback_message"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/medical_on_surface" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenInMaps"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/medical_emergency_open_in_maps"
+            android:textAllCaps="false"
+            android:textColor="@color/medical_primary"
+            android:enabled="false"
+            app:icon="@drawable/ic_location"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconTint="@color/medical_primary" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUseCurrentLocation"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"

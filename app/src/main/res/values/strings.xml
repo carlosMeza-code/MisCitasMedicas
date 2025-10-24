@@ -64,6 +64,9 @@
     <string name="medical_emergency_location_format">Lat: %1$.5f, Lon: %2$.5f</string>
     <string name="medical_emergency_map_description">Mapa con la ubicación actual del paciente.</string>
     <string name="medical_emergency_map_marker_title">Ubicación del paciente</string>
+    <string name="medical_emergency_map_fallback_message">Si el mapa no se muestra, abre la ubicación en Google Maps.</string>
+    <string name="medical_emergency_open_in_maps">Abrir en Google Maps</string>
+    <string name="medical_emergency_open_in_maps_error">No fue posible abrir Google Maps. Copia la ubicación y ábrela manualmente.</string>
     <string name="medical_emergency_sound_res_name">llamada_de_emergencia</string>
     <string name="medical_emergency_sound_not_found">No se encontró el tono de emergencia.</string>
     <string name="medical_emergency_error_area">Selecciona el área que brindará la atención.</string>
