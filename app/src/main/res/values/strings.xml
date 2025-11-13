@@ -41,11 +41,17 @@
 
     <!-- Home -->
     <string name="home_title">🏠 Inicio</string>
+    <string name="home_toolbar_title">Mis Citas Médicas</string>
     <string name="home_cta_specialties">🗂️ Ver especialidades</string>
     <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
     <string name="home_cta_new_appointment">➕ Nueva cita</string>
     <string name="home_cta_appointments">📘 Mis citas guardadas</string>
     <string name="home_cta_emergency">🚨 Emergencia médica</string>
+
+    <string name="menu_home_view_appointments">Mis citas</string>
+    <string name="menu_home_enable_reminders">Activar recordatorios</string>
+    <string name="menu_home_disable_reminders">Desactivar recordatorios</string>
+    <string name="menu_home_logout">Cerrar sesión</string>
 
     <!-- Emergencia médica -->
     <string name="medical_emergency_title">🚨 Emergencia médica</string>
@@ -99,6 +105,16 @@
     <string name="new_appointment_confirmation">🎉 ¡Cita lista!&#x0A;Paciente: %1$s&#x0A;Especialidad: %2$s&#x0A;Fecha: %3$s&#x0A;Hora: %4$s&#x0A;Notas: %5$s</string>
     <string name="new_appointment_no_notes">Sin notas adicionales.</string>
     <string name="new_appointment_success_toast">✨ Cita creada y guardada con éxito. ¡Nos vemos pronto!</string>
+
+    <string name="reminder_channel_name">Recordatorios de citas</string>
+    <string name="reminder_channel_description">Muestra notificaciones periódicas con tus próximas citas médicas.</string>
+    <string name="reminder_notification_title">Recordatorios de citas</string>
+    <string name="reminder_service_monitoring">Monitoreando tus citas en segundo plano.</string>
+    <string name="reminder_notification_no_appointments">No tienes citas programadas por ahora. Agenda una nueva para recibir recordatorios.</string>
+    <string name="reminder_notification_next_appointment">Tu próxima cita de %2$s es %1$s (%3$s a las %4$s).</string>
+    <string name="reminder_toast_started">Recordatorios en segundo plano activados.</string>
+    <string name="reminder_toast_stopped">Recordatorios en segundo plano desactivados.</string>
+    <string name="reminder_toast_permission_denied">No podemos enviar recordatorios sin permiso de notificaciones.</string>
 
     <!-- Citas guardadas -->
     <string name="appointments_title">📘 Mis citas</string>
