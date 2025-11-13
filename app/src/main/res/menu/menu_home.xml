@@ -3,19 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_view_appointments"
-        android:icon="@drawable/ic_event"
-        android:title="@string/menu_home_view_appointments"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_toggle_reminders"
-        android:icon="@drawable/ic_schedule"
-        android:title="@string/menu_home_enable_reminders"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="@string/menu_home_logout"
-        app:showAsAction="never" />
+        android:id="@+id/action_open_menu"
+        android:icon="@drawable/ic_menu_grid"
+        android:title="@string/home_menu_title"
+        app:showAsAction="always" />
 </menu>

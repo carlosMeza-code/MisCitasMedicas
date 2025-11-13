@@ -7,12 +7,19 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import kotlin.LazyThreadSafetyMode
 
 class HomeActivity : AppCompatActivity() {
@@ -35,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
                     getString(R.string.reminder_toast_permission_denied),
                     Toast.LENGTH_LONG
                 ).show()
-                invalidateOptionsMenu()
             }
         }
 
@@ -46,34 +52,11 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: MaterialToolbar = findViewById(R.id.homeToolbar)
         setSupportActionBar(toolbar)
 
-        findViewById<MaterialButton>(R.id.btnToSpecialties).setOnClickListener {
-            startActivity(Intent(this, SpecialtiesActivity::class.java))
-        }
-
-        findViewById<MaterialButton>(R.id.btnToDoctors).setOnClickListener {
-            startActivity(Intent(this, DoctorsActivity::class.java))
-        }
-
-        findViewById<MaterialButton>(R.id.btnNewAppointment).setOnClickListener {
-            startActivity(Intent(this, NewAppointmentActivity::class.java))
-        }
-
-        findViewById<MaterialButton>(R.id.btnAppointments).setOnClickListener {
-            startActivity(Intent(this, AppointmentsActivity::class.java))
-        }
-
-        findViewById<MaterialButton>(R.id.btnEmergencyCall).setOnClickListener {
-            startActivity(Intent(this, MedicalEmergencyActivity::class.java))
-        }
+        bindHomeShortcuts()
 
         if (reminderPreferences.isEnabled()) {
             ensureReminderService()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,34 +64,135 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val toggleItem = menu.findItem(R.id.action_toggle_reminders)
-        toggleItem?.title = if (AppointmentReminderService.isRunning()) {
-            getString(R.string.menu_home_disable_reminders)
-        } else {
-            getString(R.string.menu_home_enable_reminders)
-        }
-        return super.onPrepareOptionsMenu(menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_view_appointments -> {
-                startActivity(Intent(this, AppointmentsActivity::class.java))
-                true
-            }
-
-            R.id.action_toggle_reminders -> {
-                toggleReminderService()
-                true
-            }
-
-            R.id.action_logout -> {
-                logout()
+            R.id.action_open_menu -> {
+                showHomeMenu()
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun bindHomeShortcuts() {
+        findViewById<MaterialCardView>(R.id.cardInPerson).setOnClickListener {
+            startActivity(Intent(this, SpecialtiesActivity::class.java))
+        }
+
+        findViewById<MaterialCardView>(R.id.cardVirtual).setOnClickListener {
+            startActivity(Intent(this, DoctorsActivity::class.java))
+        }
+
+        findViewById<MaterialCardView>(R.id.cardHomeService).setOnClickListener {
+            startActivity(Intent(this, MedicalEmergencyActivity::class.java))
+        }
+
+        findViewById<MaterialCardView>(R.id.cardHistory).setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
+        }
+
+        findViewById<MaterialCardView>(R.id.cardPending).setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
+        }
+
+        findViewById<MaterialCardView>(R.id.cardLocations).setOnClickListener {
+            showComingSoon()
+        }
+
+        findViewById<MaterialButton>(R.id.btnEmergencyCall).setOnClickListener {
+            startActivity(Intent(this, MedicalEmergencyActivity::class.java))
+        }
+
+        findViewById<MaterialButton>(R.id.btnCampaignAction).setOnClickListener {
+            showComingSoon()
+        }
+
+        findViewById<ExtendedFloatingActionButton>(R.id.fabNewAppointment).setOnClickListener {
+            startActivity(Intent(this, NewAppointmentActivity::class.java))
+        }
+
+        findViewById<TextInputEditText>(R.id.etHomeSearch).setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query = textView.text?.toString()?.trim().orEmpty()
+                if (query.isNotEmpty()) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.home_option_soon),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun showHomeMenu() {
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.layout_home_menu_bottom_sheet, null)
+        dialog.setContentView(view)
+
+        val reminderStatus = view.findViewById<TextView>(R.id.tvReminderStatus)
+        updateReminderStatus(reminderStatus)
+
+        view.findViewById<MaterialCardView>(R.id.menuInPerson)?.setOnClickListener {
+            startActivity(Intent(this, SpecialtiesActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuVirtual)?.setOnClickListener {
+            startActivity(Intent(this, DoctorsActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuHomeService)?.setOnClickListener {
+            startActivity(Intent(this, MedicalEmergencyActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuHistory)?.setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuPending)?.setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuLocations)?.setOnClickListener {
+            showComingSoon()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuSupport)?.setOnClickListener {
+            showComingSoon()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuReminders)?.setOnClickListener {
+            toggleReminderService()
+            updateReminderStatus(reminderStatus)
+        }
+
+        view.findViewById<View>(R.id.btnEditProfile)?.setOnClickListener {
+            Toast.makeText(this, getString(R.string.home_option_soon), Toast.LENGTH_SHORT).show()
+        }
+
+        view.findViewById<View>(R.id.btnLogout)?.setOnClickListener {
+            dialog.dismiss()
+            logout()
+        }
+
+        dialog.show()
+    }
+
+    private fun updateReminderStatus(textView: TextView?) {
+        val running = AppointmentReminderService.isRunning()
+        textView?.text = if (running) {
+            getString(R.string.home_reminders_on)
+        } else {
+            getString(R.string.home_reminders_off)
         }
     }
 
@@ -123,7 +207,6 @@ class HomeActivity : AppCompatActivity() {
             reminderPreferences.setEnabled(true)
             ensureReminderService()
         }
-        invalidateOptionsMenu()
     }
 
     private fun ensureReminderService() {
@@ -132,7 +215,10 @@ class HomeActivity : AppCompatActivity() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         } else {
@@ -149,7 +235,10 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.reminder_toast_started), Toast.LENGTH_SHORT)
                 .show()
         }
-        invalidateOptionsMenu()
+    }
+
+    private fun showComingSoon() {
+        Toast.makeText(this, getString(R.string.home_option_soon), Toast.LENGTH_SHORT).show()
     }
 
     private fun logout() {
