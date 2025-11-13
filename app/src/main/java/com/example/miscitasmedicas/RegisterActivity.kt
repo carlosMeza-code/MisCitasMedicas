@@ -2,7 +2,6 @@ package com.example.miscitasmedicas
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -12,11 +11,11 @@ import com.google.android.material.textfield.TextInputLayout
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var tilName: TextInputLayout
-    private lateinit var tilEmail: TextInputLayout
+    private lateinit var tilDocument: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
     private lateinit var tilPasswordRepeat: TextInputLayout
     private lateinit var etName: TextInputEditText
-    private lateinit var etEmail: TextInputEditText
+    private lateinit var etDocument: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var etPasswordRepeat: TextInputEditText
     private lateinit var btnRegister: MaterialButton
@@ -34,11 +33,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun bindViews() {
         tilName = findViewById(R.id.tilName)
-        tilEmail = findViewById(R.id.tilEmailReg)
+        tilDocument = findViewById(R.id.tilEmailReg)
         tilPassword = findViewById(R.id.tilPassReg)
         tilPasswordRepeat = findViewById(R.id.tilPass2Reg)
         etName = findViewById(R.id.etName)
-        etEmail = findViewById(R.id.etEmailReg)
+        etDocument = findViewById(R.id.etEmailReg)
         etPassword = findViewById(R.id.etPassReg)
         etPasswordRepeat = findViewById(R.id.etPass2Reg)
         btnRegister = findViewById(R.id.btnRegister)
@@ -57,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
         clearErrors()
 
         val name = etName.text?.toString()?.trim().orEmpty()
-        val email = etEmail.text?.toString()?.trim().orEmpty()
+        val document = etDocument.text?.toString()?.trim().orEmpty()
         val password = etPassword.text?.toString()?.trim().orEmpty()
         val passwordRepeat = etPasswordRepeat.text?.toString()?.trim().orEmpty()
 
@@ -68,11 +67,11 @@ class RegisterActivity : AppCompatActivity() {
             hasError = true
         }
 
-        if (email.isEmpty()) {
-            tilEmail.error = getString(R.string.error_email_required)
+        if (document.isEmpty()) {
+            tilDocument.error = getString(R.string.error_email_required)
             hasError = true
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            tilEmail.error = getString(R.string.error_email_invalid)
+        } else if (!isValidDocument(document)) {
+            tilDocument.error = getString(R.string.error_email_invalid)
             hasError = true
         }
 
@@ -88,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
 
         if (hasError) return
 
-        val user = User(name = name, email = email, password = password)
+        val user = User(name = name, document = document, password = password)
         sessionManager.saveUser(user)
 
         Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
@@ -101,8 +100,15 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun clearErrors() {
         tilName.error = null
-        tilEmail.error = null
+        tilDocument.error = null
         tilPassword.error = null
         tilPasswordRepeat.error = null
+    }
+
+    private fun isValidDocument(document: String): Boolean {
+        if (document.length !in 8..12) {
+            return false
+        }
+        return document.all { it.isLetterOrDigit() }
     }
 }

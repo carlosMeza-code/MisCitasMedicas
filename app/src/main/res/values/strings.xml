@@ -14,9 +14,9 @@
     <!-- Login -->
     <string name="login_title">Inicia sesión</string>
     <string name="login_subtitle">Ingresa tus credenciales para continuar con tus citas.</string>
-    <string name="login_email">Correo</string>
+    <string name="login_email">Documento de identidad</string>
     <string name="login_password">Contraseña</string>
-    <string name="login_hint_email">tucorreo@ejemplo.com</string>
+    <string name="login_hint_email">Ingresa tu DNI</string>
     <string name="success_login">¡Hola, %1$s!</string>
 
     <!-- Registro -->
@@ -27,8 +27,8 @@
     <string name="success_register">Cuenta creada correctamente. Ahora puedes iniciar sesión.</string>
 
     <!-- Mensajes de error -->
-    <string name="error_email_required">Ingresa tu correo electrónico.</string>
-    <string name="error_email_invalid">Ingresa un correo válido.</string>
+    <string name="error_email_required">Ingresa tu documento de identidad.</string>
+    <string name="error_email_invalid">Ingresa un documento válido (8 a 12 caracteres).</string>
     <string name="error_password_required">Ingresa tu contraseña.</string>
     <string name="error_password_length">La contraseña debe tener al menos 6 caracteres.</string>
     <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
@@ -40,13 +40,32 @@
     <string name="placeholder_new_appointment">Funcionalidad en construcción 🛠️</string>
 
     <!-- Home -->
-    <string name="home_title">🏠 Inicio</string>
-    <string name="home_toolbar_title">Mis Citas Médicas</string>
-    <string name="home_cta_specialties">🗂️ Ver especialidades</string>
-    <string name="home_cta_doctors">👨‍⚕️ Ver doctores</string>
-    <string name="home_cta_new_appointment">➕ Nueva cita</string>
-    <string name="home_cta_appointments">📘 Mis citas guardadas</string>
-    <string name="home_cta_emergency">🚨 Emergencia médica</string>
+    <string name="home_title">¡Hola de nuevo!</string>
+    <string name="home_toolbar_title">Villa Salud</string>
+    <string name="home_subtitle">Gestiona tus atenciones y mantén tus citas al día.</string>
+    <string name="home_search_hint">Busca a tu especialista o servicio…</string>
+    <string name="home_services_title">Servicios disponibles</string>
+    <string name="home_campaign_title">Unidos contra el cáncer</string>
+    <string name="home_campaign_subtitle">Agenda tu chequeo preventivo y recibe un seguimiento personalizado.</string>
+    <string name="home_campaign_action">Conoce más</string>
+    <string name="home_emergency_title">Ambulancia Villa Salud</string>
+    <string name="home_emergency_description">Brindamos atención prioritaria todos los días de 7:00 a 19:00.</string>
+    <string name="home_emergency_call">Llamar</string>
+    <string name="home_menu_title">Accesos directos</string>
+    <string name="home_option_in_person">Atenciones presenciales</string>
+    <string name="home_option_virtual">Atenciones virtuales</string>
+    <string name="home_option_home_service">Servicio a domicilio</string>
+    <string name="home_option_history">Mi historial de citas</string>
+    <string name="home_option_pending">Mis citas pendientes</string>
+    <string name="home_option_locations">Sedes</string>
+    <string name="home_option_support">Soporte técnico</string>
+    <string name="home_option_reminders">Recordatorios</string>
+    <string name="home_reminders_on">Activos</string>
+    <string name="home_reminders_off">Inactivos</string>
+    <string name="home_option_profile">Editar perfil</string>
+    <string name="home_option_logout">Cerrar sesión</string>
+    <string name="home_option_soon">Pronto disponible.</string>
+    <string name="home_new_appointment">Nueva cita</string>
 
     <string name="menu_home_view_appointments">Mis citas</string>
     <string name="menu_home_enable_reminders">Activar recordatorios</string>

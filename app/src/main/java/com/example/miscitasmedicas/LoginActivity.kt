@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Patterns
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -17,9 +16,9 @@ import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var tilEmail: TextInputLayout
+    private lateinit var tilDocument: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
-    private lateinit var etEmail: TextInputEditText
+    private lateinit var etDocument: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var btnLogin: MaterialButton
     private lateinit var btnGoRegister: MaterialButton
@@ -41,9 +40,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
-        tilEmail = findViewById(R.id.tilEmail)
+        tilDocument = findViewById(R.id.tilEmail)
         tilPassword = findViewById(R.id.tilPassword)
-        etEmail = findViewById(R.id.etEmail)
+        etDocument = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
         btnGoRegister = findViewById(R.id.btnGoRegister)
@@ -61,16 +60,16 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLogin() {
         pendingNavigation?.let { handler.removeCallbacks(it) }
         clearErrors()
-        val email = etEmail.text?.toString()?.trim().orEmpty()
+        val document = etDocument.text?.toString()?.trim().orEmpty()
         val password = etPassword.text?.toString()?.trim().orEmpty()
 
         var hasError = false
 
-        if (email.isEmpty()) {
-            tilEmail.error = getString(R.string.error_email_required)
+        if (document.isEmpty()) {
+            tilDocument.error = getString(R.string.error_email_required)
             hasError = true
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            tilEmail.error = getString(R.string.error_email_invalid)
+        } else if (!isValidDocument(document)) {
+            tilDocument.error = getString(R.string.error_email_invalid)
             hasError = true
         }
 
@@ -87,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        if (email.equals(user.email, ignoreCase = true) && password == user.password) {
+        if (document.equals(user.document, ignoreCase = true) && password == user.password) {
             showLoadingOverlay()
             btnLogin.isEnabled = false
             pendingNavigation = Runnable {
@@ -103,8 +102,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun clearErrors() {
-        tilEmail.error = null
+        tilDocument.error = null
         tilPassword.error = null
+    }
+
+    private fun isValidDocument(document: String): Boolean {
+        if (document.length !in 8..12) {
+            return false
+        }
+        return document.all { it.isLetterOrDigit() }
     }
 
     private fun showLoadingOverlay() {
