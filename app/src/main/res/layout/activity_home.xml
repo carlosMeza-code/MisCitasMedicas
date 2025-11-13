@@ -152,8 +152,8 @@
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1">
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -188,8 +188,8 @@
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1">
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -224,8 +224,8 @@
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1">
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -260,8 +260,8 @@
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1">
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -296,8 +296,8 @@
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1">
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
