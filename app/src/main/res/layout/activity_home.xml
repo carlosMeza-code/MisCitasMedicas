@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/medical_background"
     android:padding="24dp">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/homeToolbar"
+        style="@style/Widget.MyApp.Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:title="@string/home_toolbar_title"
+        android:titleTextColor="@color/medical_on_surface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvHomeTitle"
-        android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/home_title"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="@color/medical_on_surface"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeToolbar" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnToSpecialties"
