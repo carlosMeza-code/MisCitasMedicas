@@ -37,6 +37,7 @@ class AppointmentReminderService : Service() {
     private val notificationManager by lazy(LazyThreadSafetyMode.NONE) {
         NotificationManagerCompat.from(this)
     }
+    private var lastStatusMessage: String? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -58,6 +59,7 @@ class AppointmentReminderService : Service() {
         scope.cancel()
         stopForeground(true)
         notificationManager.cancel(FOREGROUND_NOTIFICATION_ID)
+        lastStatusMessage = null
         super.onDestroy()
     }
 
@@ -90,8 +92,11 @@ class AppointmentReminderService : Service() {
             )
         } ?: getString(R.string.reminder_notification_no_appointments)
 
-        val notification = buildStatusNotification(message)
-        notificationManager.notify(FOREGROUND_NOTIFICATION_ID, notification)
+        if (message != lastStatusMessage) {
+            lastStatusMessage = message
+            val notification = buildStatusNotification(message)
+            notificationManager.notify(FOREGROUND_NOTIFICATION_ID, notification)
+        }
     }
 
     private fun buildStatusNotification(message: String): Notification {
@@ -134,24 +139,18 @@ class AppointmentReminderService : Service() {
 
         val formatter = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
         val now = System.currentTimeMillis()
-        var best: UpcomingAppointment? = null
 
-        for (appointment in appointments) {
-            val date = try {
-                formatter.parse("${appointment.date} ${appointment.time}")
-            } catch (exception: Exception) {
-                null
-            } ?: continue
-            val scheduled = date.time
-            if (scheduled < now) continue
+        return appointments
+            .asSequence()
+            .mapNotNull { appointment ->
+                val scheduled = runCatching {
+                    formatter.parse("${appointment.date} ${appointment.time}")?.time
+                }.getOrNull() ?: return@mapNotNull null
 
-            val diff = scheduled - now
-            if (best == null || diff < best!!.scheduledTime - now) {
-                best = UpcomingAppointment(appointment, scheduled)
+                if (scheduled < now) return@mapNotNull null
+                UpcomingAppointment(appointment, scheduled)
             }
-        }
-
-        return best
+            .minByOrNull(UpcomingAppointment::scheduledTime)
     }
 
     private fun immutableFlag(): Int {

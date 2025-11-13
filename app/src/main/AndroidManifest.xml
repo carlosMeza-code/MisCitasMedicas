@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -35,8 +36,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!-- Si tu app apunta a targetSdk 31+ (Android 12+), cualquier Activity
-             con intent-filters DEBE declarar android:exported -->
+        <!-- If the app targets SDK 31+ (Android 12+), every Activity with
+             intent-filters MUST declare android:exported -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
