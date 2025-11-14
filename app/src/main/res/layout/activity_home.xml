@@ -40,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/home_title"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
                 android:textColor="@color/medical_on_surface"
-                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -50,8 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/home_subtitle"
-                android:textColor="@color/medical_on_surface_variant"
-                android:textSize="16sp" />
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="@color/medical_on_surface_variant" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEmergency"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 app:cardBackgroundColor="@color/medical_primary_container"
-                app:cardCornerRadius="18dp"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -73,18 +73,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/home_emergency_title"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textColor="@color/medical_on_primary_container"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvEmergencyDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:text="@string/home_emergency_description"
-                        android:textColor="@color/medical_on_surface_variant"
-                        android:textSize="14sp" />
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface_variant" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnEmergencyCall"
@@ -94,7 +94,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/home_emergency_call"
                         android:textColor="@color/medical_on_primary_container"
-                        app:cornerRadius="16dp"
+                        app:cornerRadius="12dp"
                         app:icon="@drawable/ic_phone"
                         app:iconGravity="textStart"
                         app:iconPadding="12dp"
@@ -110,10 +110,10 @@
                 android:hint="@string/home_search_hint"
                 app:boxBackgroundColor="@color/medical_surface"
                 app:boxBackgroundMode="filled"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
                 app:startIconDrawable="@drawable/ic_search"
                 app:startIconTint="@color/medical_hint">
 
@@ -123,25 +123,24 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
-                    android:textColor="@color/medical_on_surface"
-                    android:textSize="16sp" />
+                    android:textColor="@color/medical_on_surface" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tvServicesTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/home_services_title"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="@color/medical_on_surface"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/gridServices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:columnCount="3"
                 android:rowCount="2">
 
@@ -151,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -162,7 +161,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -176,8 +175,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_in_person"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -187,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -198,7 +197,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -212,8 +211,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_virtual"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -223,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -234,7 +233,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -248,8 +247,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_home_service"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -259,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -270,7 +269,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -284,8 +283,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_history"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -295,7 +294,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -306,7 +305,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -320,8 +319,8 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_pending"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -331,7 +330,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/medical_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:layout_columnWeight="1"
                     app:layout_rowWeight="1">
@@ -342,7 +341,7 @@
                         android:gravity="center"
                         android:minHeight="120dp"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -356,136 +355,21 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="@string/home_option_locations"
-                            android:textColor="@color/medical_on_surface"
-                            android:textSize="14sp" />
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="@color/medical_on_surface" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.gridlayout.widget.GridLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAgenda"
+                android:id="@+id/cardCampaign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardBackgroundColor="@color/medical_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/tvAgendaTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_agenda_title"
-                        android:textColor="@color/medical_on_surface"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvAgendaSubtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_agenda_subtitle"
-                        android:textColor="@color/medical_on_surface_variant"
-                        android:textSize="14sp" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupAgenda"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:chipSpacingHorizontal="8dp"
-                        app:chipSpacingVertical="8dp">
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipCalendar"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_chip_calendar"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipPending"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_chip_pending"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipPromotions"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_chip_promotions"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipReminders"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_option_reminders"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipDiscounts"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_chip_discounts"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipLocations"
-                            style="@style/Widget.Material3.Chip.Assist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checkable="false"
-                            android:text="@string/home_chip_locations"
-                            android:textColor="@color/medical_on_surface"
-                            app:chipBackgroundColor="@color/medical_surface"
-                            app:chipStrokeColor="@color/medical_outline"
-                            app:chipStrokeWidth="1dp" />
-                    </com.google.android.material.chip.ChipGroup>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardBenefits"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
                 app:cardBackgroundColor="@color/medical_secondary"
-                app:cardCornerRadius="18dp"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
                 <LinearLayout
@@ -495,172 +379,33 @@
                     android:padding="20dp">
 
                     <TextView
-                        android:id="@+id/tvBenefitsTitle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvCampaignTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_benefits_title"
+                        android:text="@string/home_campaign_title"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textColor="@color/medical_on_secondary"
-                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvBenefitsSubtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_benefits_subtitle"
-                        android:textColor="@color/medical_on_secondary"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvBenefitsPromotions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/home_benefits_promotions"
-                        android:textColor="@color/medical_on_secondary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvBenefitsDiscounts"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvCampaignSubtitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/home_benefits_discounts"
-                        android:textColor="@color/medical_on_secondary"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardLocationsInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/medical_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/tvLocationsTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_locations_title"
-                        android:textColor="@color/medical_on_surface"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvLocationsSubtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_locations_subtitle"
-                        android:textColor="@color/medical_on_surface_variant"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tvLocationsList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/home_locations_list"
-                        android:textColor="@color/medical_on_surface"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSupportCenter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/medical_surface"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/tvSupportTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_support_title"
-                        android:textColor="@color/medical_on_surface"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSupportSubtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/home_support_subtitle"
-                        android:textColor="@color/medical_on_surface_variant"
-                        android:textSize="14sp" />
+                        android:text="@string/home_campaign_subtitle"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_secondary" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSupport"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/home_option_support"
-                        android:textAllCaps="false"
-                        android:textColor="@color/medical_on_primary_container"
-                        app:icon="@drawable/ic_phone"
-                        app:iconGravity="textStart"
-                        app:iconPadding="12dp"
-                        app:iconTint="@color/medical_on_primary_container" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnTerms"
+                        android:id="@+id/btnCampaignAction"
                         style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/home_option_terms"
-                        android:textAllCaps="false"
-                        android:textColor="@color/medical_on_surface"
-                        app:strokeColor="@color/medical_outline"
-                        app:strokeWidth="1dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDeleteAccount"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/home_option_delete_account"
-                        android:textAllCaps="false"
-                        android:textColor="@color/medical_emergency" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnLogout"
-                        style="@style/Widget.Material3.Button"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/home_option_logout"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@color/medical_primary"
-                        app:cornerRadius="16dp"
-                        app:icon="@drawable/ic_arrow_back"
-                        app:iconGravity="textStart"
-                        app:iconPadding="12dp"
-                        app:iconTint="@color/medical_on_primary" />
+                        android:text="@string/home_campaign_action"
+                        android:textColor="@color/medical_on_secondary"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/medical_on_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

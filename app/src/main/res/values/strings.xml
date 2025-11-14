@@ -40,10 +40,9 @@
     <string name="placeholder_new_appointment">Funcionalidad en construcción 🛠️</string>
 
     <!-- Home -->
-    <string name="home_greeting">Hola, %1$s</string>
-    <string name="home_title">Hola, nos alegra verte</string>
+    <string name="home_title">¡Hola de nuevo!</string>
     <string name="home_toolbar_title">Villa Salud</string>
-    <string name="home_subtitle">Organiza tus atenciones y consulta tus beneficios desde un mismo lugar.</string>
+    <string name="home_subtitle">Gestiona tus atenciones y mantén tus citas al día.</string>
     <string name="home_search_hint">Busca a tu especialista o servicio…</string>
     <string name="home_services_title">Servicios disponibles</string>
     <string name="home_campaign_title">Unidos contra el cáncer</string>
@@ -61,43 +60,12 @@
     <string name="home_option_locations">Sedes</string>
     <string name="home_option_support">Soporte técnico</string>
     <string name="home_option_reminders">Recordatorios</string>
-    <string name="home_reminders_on">Recordatorios activos</string>
-    <string name="home_reminders_off">Recordatorios apagados</string>
+    <string name="home_reminders_on">Activos</string>
+    <string name="home_reminders_off">Inactivos</string>
     <string name="home_option_profile">Editar perfil</string>
     <string name="home_option_logout">Cerrar sesión</string>
     <string name="home_option_soon">Pronto disponible.</string>
     <string name="home_new_appointment">Nueva cita</string>
-
-    <string name="home_agenda_title">Tu agenda inteligente</string>
-    <string name="home_agenda_subtitle">Accede rápidamente a tus próximas gestiones y beneficios.</string>
-    <string name="home_chip_calendar">📅 Calendario</string>
-    <string name="home_chip_pending">🕒 Citas pendientes</string>
-    <string name="home_chip_promotions">🎉 Promociones</string>
-    <string name="home_chip_discounts">💸 Descuentos</string>
-    <string name="home_chip_locations">📍 Sedes Lima Metropolitana</string>
-
-    <string name="home_benefits_title">Beneficios destacados</string>
-    <string name="home_benefits_subtitle">Aprovecha las novedades que tenemos para ti.</string>
-    <string name="home_benefits_promotions">Chequeos oncológicos al 30%% de descuento durante mayo.</string>
-    <string name="home_benefits_discounts">Campañas de vacunación gratuita todos los sábados.</string>
-
-    <string name="home_locations_title">Sedes en Lima Metropolitana</string>
-    <string name="home_locations_subtitle">Elige la sede más cercana para tus próximas atenciones.</string>
-    <string name="home_locations_dialog_title">Sedes disponibles</string>
-    <string name="home_locations_list">• San Isidro — Torre Corporativa Villa Salud&#x0A;• Miraflores — Centro Integral de Especialidades&#x0A;• Santiago de Surco — Clínica familiar Monterrico&#x0A;• La Molina — Punto de diagnóstico Primavera&#x0A;• San Miguel — Centro médico Costanera&#x0A;• Callao — Sede de emergencias 24/7</string>
-
-    <string name="home_support_title">Centro de ayuda</string>
-    <string name="home_support_subtitle">Administra tu cuenta y resuelve dudas en segundos.</string>
-    <string name="home_support_message">Contáctanos en soporte@villasalud.pe o llámanos al (01) 555-1234 de 7:00 a 21:00.</string>
-    <string name="home_support_positive">Entendido</string>
-    <string name="home_terms_title">Términos y condiciones</string>
-    <string name="home_terms_message">Consulta los lineamientos de uso y tratamiento de datos desde tu correo registrado.</string>
-    <string name="home_option_terms">Términos y condiciones</string>
-    <string name="home_option_delete_account">Eliminar cuenta</string>
-    <string name="home_delete_account_title">¿Eliminar tu cuenta?</string>
-    <string name="home_delete_account_message">Se borrarán tus datos guardados y deberás crear una nueva cuenta para volver a ingresar.</string>
-    <string name="home_delete_account_positive">Eliminar</string>
-    <string name="home_delete_account_toast">Tu cuenta ha sido eliminada correctamente.</string>
 
     <string name="menu_home_view_appointments">Mis citas</string>
     <string name="menu_home_enable_reminders">Activar recordatorios</string>
