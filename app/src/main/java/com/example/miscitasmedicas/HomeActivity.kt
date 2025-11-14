@@ -18,12 +18,9 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.LazyThreadSafetyMode
-import java.util.Locale
 
 class HomeActivity : AppCompatActivity() {
 
@@ -55,7 +52,6 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: MaterialToolbar = findViewById(R.id.homeToolbar)
         setSupportActionBar(toolbar)
 
-        setupGreeting()
         bindHomeShortcuts()
 
         if (reminderPreferences.isEnabled()) {
@@ -101,11 +97,15 @@ class HomeActivity : AppCompatActivity() {
         }
 
         findViewById<MaterialCardView>(R.id.cardLocations).setOnClickListener {
-            showLocationsDialog()
+            showComingSoon()
         }
 
         findViewById<MaterialButton>(R.id.btnEmergencyCall).setOnClickListener {
             startActivity(Intent(this, MedicalEmergencyActivity::class.java))
+        }
+
+        findViewById<MaterialButton>(R.id.btnCampaignAction).setOnClickListener {
+            showComingSoon()
         }
 
         findViewById<ExtendedFloatingActionButton>(R.id.fabNewAppointment).setOnClickListener {
@@ -126,50 +126,6 @@ class HomeActivity : AppCompatActivity() {
             } else {
                 false
             }
-        }
-
-        findViewById<Chip>(R.id.chipCalendar).setOnClickListener {
-            startActivity(Intent(this, AppointmentsActivity::class.java))
-        }
-
-        findViewById<Chip>(R.id.chipPending).setOnClickListener {
-            startActivity(Intent(this, AppointmentsActivity::class.java))
-        }
-
-        findViewById<Chip>(R.id.chipPromotions).setOnClickListener {
-            showBenefitDetails(R.string.home_benefits_promotions)
-        }
-
-        findViewById<Chip>(R.id.chipDiscounts).setOnClickListener {
-            showBenefitDetails(R.string.home_benefits_discounts)
-        }
-
-        findViewById<Chip>(R.id.chipLocations).setOnClickListener {
-            showLocationsDialog()
-        }
-
-        findViewById<Chip>(R.id.chipReminders).apply {
-            updateReminderStatus(chip = this)
-            setOnClickListener {
-                toggleReminderService()
-                updateReminderStatus(chip = this)
-            }
-        }
-
-        findViewById<MaterialButton>(R.id.btnSupport).setOnClickListener {
-            showSupportDialog()
-        }
-
-        findViewById<MaterialButton>(R.id.btnTerms).setOnClickListener {
-            showTermsDialog()
-        }
-
-        findViewById<MaterialButton>(R.id.btnDeleteAccount).setOnClickListener {
-            confirmAccountDeletion()
-        }
-
-        findViewById<MaterialButton>(R.id.btnLogout).setOnClickListener {
-            logout()
         }
     }
 
@@ -207,17 +163,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
         view.findViewById<MaterialCardView>(R.id.menuLocations)?.setOnClickListener {
-            showLocationsDialog()
+            showComingSoon()
         }
 
         view.findViewById<MaterialCardView>(R.id.menuSupport)?.setOnClickListener {
-            showSupportDialog()
+            showComingSoon()
         }
 
         view.findViewById<MaterialCardView>(R.id.menuReminders)?.setOnClickListener {
             toggleReminderService()
             updateReminderStatus(reminderStatus)
-            updateReminderStatus(chip = findViewById(R.id.chipReminders))
         }
 
         view.findViewById<View>(R.id.btnEditProfile)?.setOnClickListener {
@@ -232,15 +187,13 @@ class HomeActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun updateReminderStatus(textView: TextView? = null, chip: Chip? = null) {
+    private fun updateReminderStatus(textView: TextView?) {
         val running = AppointmentReminderService.isRunning()
-        val statusText = if (running) {
+        textView?.text = if (running) {
             getString(R.string.home_reminders_on)
         } else {
             getString(R.string.home_reminders_off)
         }
-        textView?.text = statusText
-        chip?.text = statusText
     }
 
     private fun toggleReminderService() {
@@ -284,72 +237,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupGreeting() {
-        val greetingView = findViewById<TextView>(R.id.tvHomeTitle)
-        val subtitleView = findViewById<TextView>(R.id.tvHomeSubtitle)
-        val displayName = sessionManager.getUser()?.name
-            ?.trim()
-            ?.takeIf { it.isNotBlank() }
-            ?.split(" ")
-            ?.firstOrNull()
-            ?.lowercase(Locale.getDefault())
-            ?.replaceFirstChar { char ->
-                if (char.isLowerCase()) {
-                    char.titlecase(Locale.getDefault())
-                } else {
-                    char.toString()
-                }
-            }
-
-        greetingView.text = displayName?.let { getString(R.string.home_greeting, it) }
-            ?: getString(R.string.home_title)
-        subtitleView.text = getString(R.string.home_subtitle)
-    }
-
-    private fun showLocationsDialog() {
-        val locations = resources.getStringArray(R.array.home_locations)
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.home_locations_dialog_title)
-            .setItems(locations, null)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    private fun showSupportDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.home_support_title)
-            .setMessage(R.string.home_support_message)
-            .setPositiveButton(R.string.home_support_positive, null)
-            .show()
-    }
-
-    private fun showTermsDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.home_terms_title)
-            .setMessage(R.string.home_terms_message)
-            .setPositiveButton(R.string.home_support_positive, null)
-            .show()
-    }
-
-    private fun showBenefitDetails(messageRes: Int) {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.home_benefits_title)
-            .setMessage(messageRes)
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
-    }
-
-    private fun confirmAccountDeletion() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.home_delete_account_title)
-            .setMessage(R.string.home_delete_account_message)
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.home_delete_account_positive) { _, _ ->
-                Toast.makeText(this, getString(R.string.home_delete_account_toast), Toast.LENGTH_SHORT)
-                    .show()
-                logout()
-            }
-            .show()
+    private fun showComingSoon() {
+        Toast.makeText(this, getString(R.string.home_option_soon), Toast.LENGTH_SHORT).show()
     }
 
     private fun logout() {
