@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:alignmentMode="alignMargins"
         android:columnCount="3">
 
         <com.google.android.material.card.MaterialCardView
@@ -35,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_columnWeight="1"
+            android:layout_columnWeight="1"
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
@@ -73,7 +74,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,7 +109,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,7 +144,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,7 +179,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,7 +214,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -248,7 +249,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -293,7 +294,7 @@
             app:cardBackgroundColor="@color/medical_background"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:layout_columnWeight="1">
+            android:layout_columnWeight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -332,26 +333,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/btnEditProfile"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="@string/home_option_profile"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="@color/medical_on_surface" />
 
         <TextView
             android:id="@+id/btnLogout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
             android:text="@string/home_option_logout"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="@color/medical_emergency" />
