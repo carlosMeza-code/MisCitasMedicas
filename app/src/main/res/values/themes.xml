@@ -10,6 +10,8 @@
         <item name="colorOnSecondary">@color/medical_on_secondary</item>
         <item name="colorSurface">@color/medical_surface</item>
         <item name="colorOnSurface">@color/medical_on_surface</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
         <item name="android:windowBackground">@color/medical_background</item>
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
