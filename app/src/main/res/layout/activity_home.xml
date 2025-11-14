@@ -136,26 +136,21 @@
                 android:textColor="@color/medical_on_surface"
                 android:textStyle="bold" />
 
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/gridServices"
+            <LinearLayout
+                android:id="@+id/layoutServices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:columnCount="2"
-                android:rowCount="3"
-                android:useDefaultMargins="true">
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInPerson"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -185,15 +180,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardVirtual"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -223,15 +215,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardHomeService"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -261,15 +250,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardHistory"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -299,15 +285,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardPending"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -337,15 +320,11 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardLocations"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="fill_horizontal"
                     app:cardBackgroundColor="@color/medical_surface"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="2dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -370,10 +349,20 @@
                             android:text="@string/home_option_locations"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="@color/medical_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:text="VILLA EL SALVADOR · LURÍN · SAN JUAN DE MIRAFLORES"
+                            android:textAlignment="center"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="@color/medical_on_surface_variant" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            </androidx.gridlayout.widget.GridLayout>
+            </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCampaign"
