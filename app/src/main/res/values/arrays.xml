@@ -23,4 +23,13 @@
         <item>Urgencia moderada</item>
         <item>Emergencia crítica</item>
     </string-array>
+
+    <string-array name="home_locations">
+        <item>San Isidro — Torre Corporativa Villa Salud</item>
+        <item>Miraflores — Centro Integral de Especialidades</item>
+        <item>Santiago de Surco — Clínica familiar Monterrico</item>
+        <item>La Molina — Punto de diagnóstico Primavera</item>
+        <item>San Miguel — Centro médico Costanera</item>
+        <item>Callao — Sede de emergencias 24/7</item>
+    </string-array>
 </resources>
