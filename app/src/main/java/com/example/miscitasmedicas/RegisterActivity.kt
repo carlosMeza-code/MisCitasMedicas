@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth   // <--- NUEVO
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -22,17 +24,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnRegister: MaterialButton
     private lateinit var btnGoLogin: MaterialButton
     private lateinit var sessionManager: SessionManager
-
-    private lateinit var auth: FirebaseAuth   // <--- NUEVO
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         sessionManager = SessionManager(this)
-        auth = FirebaseAuth.getInstance()     // <--- NUEVO
-
         bindViews()
+        setupFirebaseDatabase()
         setupListeners()
     }
 
@@ -55,6 +55,18 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun setupFirebaseDatabase() {
+        val databaseUrl = getString(R.string.firebase_database_url)
+
+        if (databaseUrl.isBlank() || databaseUrl.contains("your-project-id", ignoreCase = true)) {
+            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
+            btnRegister.isEnabled = false
+            return
+        }
+
+        database = Firebase.database(databaseUrl).reference
     }
 
     private fun handleRegister() {
@@ -92,30 +104,35 @@ class RegisterActivity : AppCompatActivity() {
 
         if (hasError) return
 
-        // ----------------- FIREBASE AUTH AQUÍ -----------------
-        // Usamos el documento como "email interno"
-        val emailForFirebase = "$document@dni.miscitasmedicas.com"
+        if (!::database.isInitialized) {
+            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
+            return
+        }
 
-        auth.createUserWithEmailAndPassword(emailForFirebase, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Guardamos también en SessionManager (para nombre/documento)
-                    val user = User(name = name, document = document, password = password)
-                    sessionManager.saveUser(user)
+        val user = User(name = name, document = document, password = password)
+        saveUserToDatabase(user)
+    }
 
-                    Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                } else {
-                    // Error al crear usuario en Firebase
-                    val msg = task.exception?.localizedMessage
-                        ?: "Error al registrar el usuario"
-                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-                }
+    private fun saveUserToDatabase(user: User) {
+        btnRegister.isEnabled = false
+        database.child("users").child(user.document).setValue(user)
+            .addOnSuccessListener {
+                sessionManager.saveUser(user)
+                Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
+                navigateToLogin()
             }
+            .addOnFailureListener { error ->
+                btnRegister.isEnabled = true
+                val message = error.localizedMessage ?: getString(R.string.error_register_database)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun clearErrors() {
