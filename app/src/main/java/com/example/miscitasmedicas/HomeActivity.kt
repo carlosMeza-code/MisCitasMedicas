@@ -118,6 +118,10 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, AppointmentsActivity::class.java))
         }
 
+        findViewById<MaterialCardView>(R.id.cardContacts).setOnClickListener {
+            startActivity(Intent(this, ContactsActivity::class.java))
+        }
+
         findViewById<MaterialCardView>(R.id.cardLocations).setOnClickListener {
             showComingSoon()
         }
@@ -178,6 +182,11 @@ class HomeActivity : AppCompatActivity() {
 
         view.findViewById<MaterialCardView>(R.id.menuPending)?.setOnClickListener {
             startActivity(Intent(this, AppointmentsActivity::class.java))
+            dialog.dismiss()
+        }
+
+        view.findViewById<MaterialCardView>(R.id.menuContacts)?.setOnClickListener {
+            startActivity(Intent(this, ContactsActivity::class.java))
             dialog.dismiss()
         }
 

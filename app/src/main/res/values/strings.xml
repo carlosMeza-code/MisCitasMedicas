@@ -64,6 +64,7 @@
     <string name="home_option_history">Mi historial de citas</string>
     <string name="home_option_pending">Mis citas pendientes</string>
     <string name="home_option_locations">Sedes</string>
+    <string name="home_option_contacts">Contactos</string>
     <string name="home_option_support">Soporte técnico</string>
     <string name="home_option_reminders">Recordatorios</string>
     <string name="home_reminders_on">Activos</string>
@@ -77,6 +78,23 @@
     <string name="menu_home_enable_reminders">Activar recordatorios</string>
     <string name="menu_home_disable_reminders">Desactivar recordatorios</string>
     <string name="menu_home_logout">Cerrar sesión</string>
+
+    <!-- Contactos -->
+    <string name="contacts_title">👥 Contactos de confianza</string>
+    <string name="contacts_subtitle">Guarda las personas a las que podemos avisar o compartir tus citas.</string>
+    <string name="contacts_empty">Aún no agregas contactos. Registra uno nuevo para mantenerlos sincronizados.</string>
+    <string name="contacts_action_add">Nuevo contacto</string>
+    <string name="contacts_action_save">Guardar contacto</string>
+    <string name="contacts_dialog_title">Agregar contacto</string>
+    <string name="contacts_field_name">Nombre completo</string>
+    <string name="contacts_field_relationship">Relación (familiar, amigo, tutor…)</string>
+    <string name="contacts_field_phone">Teléfono</string>
+    <string name="contacts_field_email">Correo electrónico</string>
+    <string name="contacts_error_required_fields">Nombre y teléfono son obligatorios.</string>
+    <string name="contacts_error_loading">No pudimos cargar tus contactos: %1$s</string>
+    <string name="contacts_error_saving">No se pudo guardar el contacto. Intenta de nuevo.</string>
+    <string name="contacts_success_saved">Contacto guardado en tu cuenta.</string>
+    <string name="contacts_list_content_description">Lista de contactos sincronizados con Firebase.</string>
 
     <!-- Emergencia médica -->
     <string name="medical_emergency_title">🚨 Emergencia médica</string>
