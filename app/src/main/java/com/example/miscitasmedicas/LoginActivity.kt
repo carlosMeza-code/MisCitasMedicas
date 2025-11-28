@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth   // <--- NUEVO
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,11 +30,15 @@ class LoginActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private var pendingNavigation: Runnable? = null
 
+    private lateinit var auth: FirebaseAuth   // <--- NUEVO
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         sessionManager = SessionManager(this)
+        auth = FirebaseAuth.getInstance()     // <--- NUEVO
+
         bindViews()
         setupListeners()
         pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse)
@@ -60,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleLogin() {
         pendingNavigation?.let { handler.removeCallbacks(it) }
         clearErrors()
+
         val document = etDocument.text?.toString()?.trim().orEmpty()
         val password = etPassword.text?.toString()?.trim().orEmpty()
 
@@ -80,25 +86,39 @@ class LoginActivity : AppCompatActivity() {
 
         if (hasError) return
 
-        val user = sessionManager.getUser()
-        if (user == null) {
-            Toast.makeText(this, R.string.error_user_not_found, Toast.LENGTH_LONG).show()
-            return
-        }
+        // ------------- LOGIN CON FIREBASE ----------------
+        val emailForFirebase = "$document@dni.miscitasmedicas.com"
 
-        if (document.equals(user.document, ignoreCase = true) && password == user.password) {
-            showLoadingOverlay()
-            btnLogin.isEnabled = false
-            pendingNavigation = Runnable {
-                Toast.makeText(this, getString(R.string.success_login, user.name), Toast.LENGTH_SHORT).show()
-                hideLoadingOverlay()
-                btnLogin.isEnabled = true
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
-            }.also { handler.postDelayed(it, 1200) }
-        } else {
-            tilPassword.error = getString(R.string.error_credentials)
-        }
+        showLoadingOverlay()
+        btnLogin.isEnabled = false
+
+        auth.signInWithEmailAndPassword(emailForFirebase, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val localUser = sessionManager.getUser()
+
+                    pendingNavigation = Runnable {
+                        // Si tenemos nombre guardado, lo usamos; si no, mostramos el documento
+                        val displayName = localUser?.name ?: document
+                        Toast.makeText(
+                            this,
+                            getString(R.string.success_login, displayName),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        hideLoadingOverlay()
+                        btnLogin.isEnabled = true
+                        startActivity(Intent(this, HomeActivity::class.java))
+                        finish()
+                    }.also { handler.postDelayed(it, 1200) }
+                } else {
+                    hideLoadingOverlay()
+                    btnLogin.isEnabled = true
+                    tilPassword.error = getString(R.string.error_credentials)
+
+                    // Si quieres ver el error real para depurar:
+                    // Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun clearErrors() {

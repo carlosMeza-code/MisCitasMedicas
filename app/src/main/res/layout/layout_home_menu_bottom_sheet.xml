@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/home_menu_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="12dp">
 
     <View
         android:layout_width="40dp"
@@ -23,337 +24,270 @@
         android:textColor="@color/medical_on_surface"
         android:textStyle="bold" />
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridMenuOptions"
+    <!-- Contenedor de filas: cada fila contiene 2 tarjetas (cuadritos) -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:alignmentMode="alignMargins"
-        android:columnCount="3">
+        android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuInPerson"
-            android:layout_width="0dp"
+        <!-- Fila 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_columnWeight="1"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuInPerson"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🏥"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/home_option_in_person"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuVirtual"
-            android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🏥"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_in_person"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuVirtual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💻"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_virtual"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Fila 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuHomeService"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💻"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/home_option_virtual"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuHomeService"
-            android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🚑"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_home_service"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📜"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_history"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <!-- Fila 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuPending"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🚑"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/home_option_home_service"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuHistory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⏳"
+                        android:textSize="26sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_pending"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📘"
-                    android:textSize="26sp" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/menuSettings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/medical_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:clickable="false"
+                android:focusable="false">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/home_option_history"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:minHeight="110dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuPending"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⚙️"
+                        android:textSize="26sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_option_settings"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/medical_on_surface" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🕒"
-                    android:textSize="26sp" />
+        <!-- Si quieres agregar más filas repite el patrón de arriba -->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:text="@string/home_option_pending"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuLocations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📍"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:text="@string/home_option_locations"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuReminders"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🔔"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:id="@+id/tvReminderTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:text="@string/home_option_reminders"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-
-                <TextView
-                    android:id="@+id/tvReminderStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/home_reminders_off"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:textColor="@color/medical_on_surface_variant" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/menuSupport"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/medical_background"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            android:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:minHeight="110dp"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🛠️"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:text="@string/home_option_support"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="@color/medical_on_surface" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </androidx.gridlayout.widget.GridLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="12dp"
         android:background="@color/medical_outline" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/btnEditProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/home_option_profile"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="@color/medical_on_surface" />
-
-        <TextView
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
-            android:text="@string/home_option_logout"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="@color/medical_emergency" />
-    </LinearLayout>
 
 </LinearLayout>

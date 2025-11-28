@@ -19,25 +19,21 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.LazyThreadSafetyMode
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /**
- * Servicio en primer plano que revisa periódicamente las citas guardadas para
- * mantener al usuario informado aun cuando la app está en segundo plano.
+ * Servicio en primer plano mejorado que revisa las citas cada 30 segundos
+ * para mantener al usuario informado de manera más frecuente.
  */
 class AppointmentReminderService : Service() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    private val storage by lazy(LazyThreadSafetyMode.NONE) {
-        AppointmentStorage(applicationContext)
-    }
-    private val notificationManager by lazy(LazyThreadSafetyMode.NONE) {
-        NotificationManagerCompat.from(this)
-    }
+    private val storage by lazy { AppointmentStorage(applicationContext) }
+    private val notificationManager by lazy { NotificationManagerCompat.from(this) }
     private var lastStatusMessage: String? = null
+    private var lastAppointmentCount = 0
 
     override fun onCreate() {
         super.onCreate()
@@ -57,7 +53,7 @@ class AppointmentReminderService : Service() {
     override fun onDestroy() {
         running = false
         scope.cancel()
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
         notificationManager.cancel(FOREGROUND_NOTIFICATION_ID)
         lastStatusMessage = null
         super.onDestroy()
@@ -69,20 +65,35 @@ class AppointmentReminderService : Service() {
         scope.launch {
             while (isActive) {
                 updateReminderNotification()
-                delay(CHECK_INTERVAL_MS)
+                delay(CHECK_INTERVAL_MS) // Ahora 30 segundos
             }
         }
     }
 
     private suspend fun updateReminderNotification() {
-        val upcoming = findNextUpcomingAppointment()
+        val appointments = storage.getAppointments()
+        val upcoming = findNextUpcomingAppointment(appointments)
+
         val message = upcoming?.let { upcomingAppointment ->
-            val relative = DateUtils.getRelativeTimeSpanString(
-                upcomingAppointment.scheduledTime,
-                System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS,
-                DateUtils.FORMAT_ABBREV_RELATIVE
-            )
+            val timeUntil = upcomingAppointment.scheduledTime - System.currentTimeMillis()
+            val relative = when {
+                timeUntil < TimeUnit.MINUTES.toMillis(5) -> "en menos de 5 minutos"
+                timeUntil < TimeUnit.HOURS.toMillis(1) -> {
+                    val mins = TimeUnit.MILLISECONDS.toMinutes(timeUntil)
+                    "en $mins minutos"
+                }
+                timeUntil < TimeUnit.DAYS.toMillis(1) -> {
+                    val hours = TimeUnit.MILLISECONDS.toHours(timeUntil)
+                    "en $hours horas"
+                }
+                else -> DateUtils.getRelativeTimeSpanString(
+                    upcomingAppointment.scheduledTime,
+                    System.currentTimeMillis(),
+                    DateUtils.DAY_IN_MILLIS,
+                    DateUtils.FORMAT_ABBREV_RELATIVE
+                ).toString()
+            }
+
             getString(
                 R.string.reminder_notification_next_appointment,
                 relative,
@@ -92,8 +103,11 @@ class AppointmentReminderService : Service() {
             )
         } ?: getString(R.string.reminder_notification_no_appointments)
 
-        if (message != lastStatusMessage) {
+        // Actualizar si el mensaje cambió o si el número de citas cambió
+        val currentCount = appointments.size
+        if (message != lastStatusMessage || currentCount != lastAppointmentCount) {
             lastStatusMessage = message
+            lastAppointmentCount = currentCount
             val notification = buildStatusNotification(message)
             notificationManager.notify(FOREGROUND_NOTIFICATION_ID, notification)
         }
@@ -115,6 +129,8 @@ class AppointmentReminderService : Service() {
             .setContentIntent(contentIntent)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
     }
 
@@ -126,6 +142,9 @@ class AppointmentReminderService : Service() {
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
                 description = getString(R.string.reminder_channel_description)
+                setShowBadge(true)
+                enableVibration(false)
+                enableLights(false)
             }
 
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -133,8 +152,7 @@ class AppointmentReminderService : Service() {
         }
     }
 
-    private suspend fun findNextUpcomingAppointment(): UpcomingAppointment? {
-        val appointments = storage.getAppointments()
+    private fun findNextUpcomingAppointment(appointments: List<Appointment>): UpcomingAppointment? {
         if (appointments.isEmpty()) return null
 
         val formatter = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
@@ -170,7 +188,7 @@ class AppointmentReminderService : Service() {
         private const val CHANNEL_ID = "appointment_reminders"
         private const val DATE_PATTERN = "dd 'de' MMMM yyyy HH:mm"
         private const val FOREGROUND_NOTIFICATION_ID = 1001
-        private val CHECK_INTERVAL_MS = TimeUnit.MINUTES.toMillis(15)
+        private val CHECK_INTERVAL_MS = TimeUnit.SECONDS.toMillis(30) // Cambiado a 30 segundos
 
         @Volatile
         private var running: Boolean = false

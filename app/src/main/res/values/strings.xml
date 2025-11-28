@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MisCitasMedicas</string>
 
@@ -34,7 +35,7 @@
     <string name="error_password_mismatch">Las contraseñas no coinciden.</string>
     <string name="error_name_required">Ingresa tu nombre.</string>
     <string name="error_user_not_found">No encontramos una cuenta registrada. Regístrate primero.</string>
-    <string name="error_credentials">Correo o contraseña incorrectos.</string>
+    <string name="error_credentials">Documento o contraseña incorrectos.</string>
 
     <!-- Placeholders -->
     <string name="placeholder_new_appointment">Funcionalidad en construcción 🛠️</string>
@@ -51,6 +52,8 @@
     <string name="home_emergency_title">Ambulancia Villa Salud</string>
     <string name="home_emergency_description">Brindamos atención prioritaria todos los días de 7:00 a 19:00.</string>
     <string name="home_emergency_call">Llamar</string>
+
+    <!-- Menú / accesos directos -->
     <string name="home_menu_title">Accesos directos</string>
     <string name="home_option_in_person">Atenciones presenciales</string>
     <string name="home_option_virtual">Atenciones virtuales</string>
@@ -92,7 +95,7 @@
     <string name="medical_emergency_map_fallback_message">Si el mapa no se muestra, abre la ubicación en Google Maps.</string>
     <string name="medical_emergency_open_in_maps">Abrir en Google Maps</string>
     <string name="medical_emergency_open_in_maps_error">No fue posible abrir Google Maps. Copia la ubicación y ábrela manualmente.</string>
-    <string name="medical_emergency_sound_res_name">llamada_de_emergencia</string>
+    <string name="medical_emergency_sound_res_name">securityalarm</string>
     <string name="medical_emergency_sound_not_found">No se encontró el tono de emergencia.</string>
     <string name="medical_emergency_error_area">Selecciona el área que brindará la atención.</string>
     <string name="medical_emergency_error_priority">Indica el nivel de severidad del caso.</string>
@@ -155,6 +158,7 @@
     <string name="doctors_title">👨‍⚕️ Doctores</string>
     <string name="doctors_of">%1$s — Doctores</string>
     <string name="search_doctor_hint">Buscar doctor…</string>
+    <string name="home_option_settings">Ajustes</string>
 
     <!-- Estados vacíos -->
     <string name="empty_title">Nada por aquí aún</string>

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth   // <--- NUEVO
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -22,11 +23,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnGoLogin: MaterialButton
     private lateinit var sessionManager: SessionManager
 
+    private lateinit var auth: FirebaseAuth   // <--- NUEVO
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         sessionManager = SessionManager(this)
+        auth = FirebaseAuth.getInstance()     // <--- NUEVO
+
         bindViews()
         setupListeners()
     }
@@ -87,15 +92,30 @@ class RegisterActivity : AppCompatActivity() {
 
         if (hasError) return
 
-        val user = User(name = name, document = document, password = password)
-        sessionManager.saveUser(user)
+        // ----------------- FIREBASE AUTH AQUÍ -----------------
+        // Usamos el documento como "email interno"
+        val emailForFirebase = "$document@dni.miscitasmedicas.com"
 
-        Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
+        auth.createUserWithEmailAndPassword(emailForFirebase, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Guardamos también en SessionManager (para nombre/documento)
+                    val user = User(name = name, document = document, password = password)
+                    sessionManager.saveUser(user)
 
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        finish()
+                    Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // Error al crear usuario en Firebase
+                    val msg = task.exception?.localizedMessage
+                        ?: "Error al registrar el usuario"
+                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun clearErrors() {

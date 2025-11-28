@@ -20,15 +20,29 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlin.LazyThreadSafetyMode
+import androidx.work.WorkManager
+import androidx.work.PeriodicWorkRequest
+import com.google.firebase.auth.FirebaseAuth           // <--- NUEVO
+import java.util.concurrent.TimeUnit
 
 class HomeActivity : AppCompatActivity() {
 
-    private val reminderPreferences by lazy(LazyThreadSafetyMode.NONE) {
+    private val reminderPreferences by lazy {
         ReminderPreferences(applicationContext)
     }
-    private val sessionManager by lazy(LazyThreadSafetyMode.NONE) {
+    private val sessionManager by lazy {
         SessionManager(applicationContext)
+    }
+
+    // En tu actividad, inicia el Worker
+    fun startReminderWorker() {
+        val reminderWorkRequest = PeriodicWorkRequest.Builder(
+            ReminderWorker::class.java,
+            15,
+            TimeUnit.MINUTES
+        ).build()
+
+        WorkManager.getInstance(this).enqueue(reminderWorkRequest)
     }
 
     private val notificationPermissionLauncher =
@@ -48,6 +62,15 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        // --------- CHEQUEO DE USUARIO AUTENTICADO ----------
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+        // ---------------------------------------------------
 
         val toolbar: MaterialToolbar = findViewById(R.id.homeToolbar)
         setSupportActionBar(toolbar)
@@ -70,7 +93,6 @@ class HomeActivity : AppCompatActivity() {
                 showHomeMenu()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -134,9 +156,6 @@ class HomeActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.layout_home_menu_bottom_sheet, null)
         dialog.setContentView(view)
 
-        val reminderStatus = view.findViewById<TextView>(R.id.tvReminderStatus)
-        updateReminderStatus(reminderStatus)
-
         view.findViewById<MaterialCardView>(R.id.menuInPerson)?.setOnClickListener {
             startActivity(Intent(this, SpecialtiesActivity::class.java))
             dialog.dismiss()
@@ -160,28 +179,6 @@ class HomeActivity : AppCompatActivity() {
         view.findViewById<MaterialCardView>(R.id.menuPending)?.setOnClickListener {
             startActivity(Intent(this, AppointmentsActivity::class.java))
             dialog.dismiss()
-        }
-
-        view.findViewById<MaterialCardView>(R.id.menuLocations)?.setOnClickListener {
-            showComingSoon()
-        }
-
-        view.findViewById<MaterialCardView>(R.id.menuSupport)?.setOnClickListener {
-            showComingSoon()
-        }
-
-        view.findViewById<MaterialCardView>(R.id.menuReminders)?.setOnClickListener {
-            toggleReminderService()
-            updateReminderStatus(reminderStatus)
-        }
-
-        view.findViewById<View>(R.id.btnEditProfile)?.setOnClickListener {
-            Toast.makeText(this, getString(R.string.home_option_soon), Toast.LENGTH_SHORT).show()
-        }
-
-        view.findViewById<View>(R.id.btnLogout)?.setOnClickListener {
-            dialog.dismiss()
-            logout()
         }
 
         dialog.show()
