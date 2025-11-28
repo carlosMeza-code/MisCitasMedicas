@@ -55,6 +55,10 @@
     <string name="home_emergency_title">Ambulancia Villa Salud</string>
     <string name="home_emergency_description">Brindamos atención prioritaria todos los días de 7:00 a 19:00.</string>
     <string name="home_emergency_call">Llamar</string>
+    <string name="home_take_photo">📸 Tomar foto y guardar</string>
+    <string name="home_take_photo_saved">Foto guardada en la app.</string>
+    <string name="home_take_photo_error">No se pudo guardar la foto. Intenta nuevamente.</string>
+    <string name="home_take_photo_permission_denied">No podemos usar la cámara sin permiso.</string>
 
     <!-- Menú / accesos directos -->
     <string name="home_menu_title">Accesos directos</string>
