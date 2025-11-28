@@ -26,6 +26,7 @@
     <string name="register_name">Nombre completo</string>
     <string name="register_repeat_password">Repite la contraseña</string>
     <string name="success_register">Cuenta creada correctamente. Ahora puedes iniciar sesión.</string>
+    <string name="error_register_database">No pudimos guardar tus datos. Intenta nuevamente.</string>
 
     <!-- Mensajes de error -->
     <string name="error_email_required">Ingresa tu documento de identidad.</string>
