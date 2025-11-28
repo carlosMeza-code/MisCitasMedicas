@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -21,12 +24,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnRegister: MaterialButton
     private lateinit var btnGoLogin: MaterialButton
     private lateinit var sessionManager: SessionManager
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         sessionManager = SessionManager(this)
+        database = Firebase.database.reference
         bindViews()
         setupListeners()
     }
@@ -88,10 +93,25 @@ class RegisterActivity : AppCompatActivity() {
         if (hasError) return
 
         val user = User(name = name, document = document, password = password)
-        sessionManager.saveUser(user)
+        saveUserToDatabase(user)
+    }
 
-        Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
+    private fun saveUserToDatabase(user: User) {
+        btnRegister.isEnabled = false
+        database.child("users").child(user.document).setValue(user)
+            .addOnSuccessListener {
+                sessionManager.saveUser(user)
+                Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
+                navigateToLogin()
+            }
+            .addOnFailureListener { error ->
+                btnRegister.isEnabled = true
+                val message = error.localizedMessage ?: getString(R.string.error_register_database)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+    }
 
+    private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
