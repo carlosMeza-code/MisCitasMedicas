@@ -31,8 +31,8 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         sessionManager = SessionManager(this)
-        database = Firebase.database.reference
         bindViews()
+        setupFirebaseDatabase()
         setupListeners()
     }
 
@@ -55,6 +55,18 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun setupFirebaseDatabase() {
+        val databaseUrl = getString(R.string.firebase_database_url)
+
+        if (databaseUrl.isBlank() || databaseUrl.contains("your-project-id", ignoreCase = true)) {
+            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
+            btnRegister.isEnabled = false
+            return
+        }
+
+        database = Firebase.database(databaseUrl).reference
     }
 
     private fun handleRegister() {
@@ -91,6 +103,11 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         if (hasError) return
+
+        if (!::database.isInitialized) {
+            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
+            return
+        }
 
         val user = User(name = name, document = document, password = password)
         saveUserToDatabase(user)
