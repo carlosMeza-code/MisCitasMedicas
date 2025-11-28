@@ -168,18 +168,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnTakePhoto"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="@string/home_take_photo"
-                android:textAllCaps="false"
-                android:textColor="@color/medical_on_surface"
-                android:textStyle="bold"
-                app:cornerRadius="16dp" />
-
             <!-- Sección de servicios -->
             <TextView
                 android:id="@+id/tvServicesTitle"
