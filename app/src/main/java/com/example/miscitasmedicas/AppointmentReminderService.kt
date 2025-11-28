@@ -1,5 +1,6 @@
 package com.example.miscitasmedicas
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,11 +8,13 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
 import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -41,6 +44,10 @@ class AppointmentReminderService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        if (!hasNotificationPermission()) {
+            stopSelf()
+            return
+        }
         running = true
         createNotificationChannel()
         val notification = buildStatusNotification(
@@ -93,6 +100,7 @@ class AppointmentReminderService : Service() {
         } ?: getString(R.string.reminder_notification_no_appointments)
 
         if (message != lastStatusMessage) {
+            if (!hasNotificationPermission()) return
             lastStatusMessage = message
             val notification = buildStatusNotification(message)
             notificationManager.notify(FOREGROUND_NOTIFICATION_ID, notification)
@@ -158,6 +166,17 @@ class AppointmentReminderService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         } else {
             0
+        }
+    }
+
+    private fun hasNotificationPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            notificationManager.areNotificationsEnabled()
         }
     }
 
