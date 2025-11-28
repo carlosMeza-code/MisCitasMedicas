@@ -10,6 +10,7 @@
     <color name="medical_secondary">#5FA8D3</color>
     <color name="medical_on_secondary">#082032</color>
     <color name="medical_surface">#FFFFFFFF</color>
+    <color name="medical_surface_variant">#E2E8F0</color>
     <color name="medical_on_surface">#1E293B</color>
     <color name="medical_on_surface_variant">#475569</color>
     <color name="medical_background">#F3F6FB</color>
