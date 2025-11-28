@@ -3,10 +3,8 @@ package com.example.miscitasmedicas
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,7 +14,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -26,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText
 import androidx.work.WorkManager
 import androidx.work.PeriodicWorkRequest
 import com.google.firebase.auth.FirebaseAuth           // <--- NUEVO
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 class HomeActivity : AppCompatActivity() {
@@ -37,8 +33,6 @@ class HomeActivity : AppCompatActivity() {
     private val sessionManager by lazy {
         SessionManager(applicationContext)
     }
-
-    private var pendingPhotoUri: Uri? = null
 
     // En tu actividad, inicia el Worker
     fun startReminderWorker() {
@@ -60,38 +54,6 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(
                     this,
                     getString(R.string.reminder_toast_permission_denied),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-
-    private val takePictureLauncher =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.home_take_photo_saved),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                pendingPhotoUri?.let { contentResolver.delete(it, null, null) }
-                Toast.makeText(
-                    this,
-                    getString(R.string.home_take_photo_error),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            pendingPhotoUri = null
-        }
-
-    private val cameraPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-                openCamera()
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.home_take_photo_permission_denied),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -172,10 +134,6 @@ class HomeActivity : AppCompatActivity() {
             showComingSoon()
         }
 
-        findViewById<MaterialButton>(R.id.btnTakePhoto).setOnClickListener {
-            requestCameraPermissionAndOpen()
-        }
-
         findViewById<ExtendedFloatingActionButton>(R.id.fabNewAppointment).setOnClickListener {
             startActivity(Intent(this, NewAppointmentActivity::class.java))
         }
@@ -195,38 +153,6 @@ class HomeActivity : AppCompatActivity() {
                 false
             }
         }
-    }
-
-    private fun requestCameraPermissionAndOpen() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            openCamera()
-        } else {
-            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
-    }
-
-    private fun openCamera() {
-        val uri = createImageUri()
-        if (uri == null) {
-            Toast.makeText(this, getString(R.string.home_take_photo_error), Toast.LENGTH_SHORT).show()
-            return
-        }
-        pendingPhotoUri = uri
-        takePictureLauncher.launch(uri)
-    }
-
-    private fun createImageUri(): Uri? {
-        val imagesDir = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "captures")
-        if (!imagesDir.exists() && !imagesDir.mkdirs()) {
-            return null
-        }
-
-        val imageFile = File(imagesDir, "foto_${System.currentTimeMillis()}.jpg")
-        return FileProvider.getUriForFile(
-            this,
-            "$packageName.fileprovider",
-            imageFile
-        )
     }
 
     private fun showHomeMenu() {
