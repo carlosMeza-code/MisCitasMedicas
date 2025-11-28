@@ -17,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.example.miscitasmedicas.BuildConfig
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -225,7 +224,7 @@ class HomeActivity : AppCompatActivity() {
         val imageFile = File(imagesDir, "foto_${System.currentTimeMillis()}.jpg")
         return FileProvider.getUriForFile(
             this,
-            "${BuildConfig.APPLICATION_ID}.fileprovider",
+            "$packageName.fileprovider",
             imageFile
         )
     }
