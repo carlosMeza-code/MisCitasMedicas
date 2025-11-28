@@ -2,13 +2,14 @@ package com.example.miscitasmedicas
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import android.widget.Toast
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -24,15 +25,17 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnGoLogin: MaterialButton
     private lateinit var sessionManager: SessionManager
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         sessionManager = SessionManager(this)
+        auth = FirebaseAuth.getInstance()
         bindViews()
-        setupFirebaseDatabase()
         setupListeners()
+        database = FirebaseDatabase.getInstance().reference
     }
 
     private fun bindViews() {
@@ -54,18 +57,6 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-    }
-
-    private fun setupFirebaseDatabase() {
-        val databaseUrl = getString(R.string.firebase_database_url)
-
-        if (databaseUrl.isBlank() || databaseUrl.contains("your-project-id", ignoreCase = true)) {
-            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
-            btnRegister.isEnabled = false
-            return
-        }
-
-        database = FirebaseDatabase.getInstance(databaseUrl).reference
     }
 
     private fun handleRegister() {
@@ -103,19 +94,21 @@ class RegisterActivity : AppCompatActivity() {
 
         if (hasError) return
 
-        if (!::database.isInitialized) {
-            Toast.makeText(this, R.string.error_missing_firebase_config, Toast.LENGTH_LONG).show()
-            return
-        }
-
+        val emailForFirebase = "$document@dni.miscitasmedicas.com"
         val user = User(name = name, document = document, password = password)
-        saveUserToDatabase(user)
+        createUserInFirebase(emailForFirebase, user)
     }
 
-    private fun saveUserToDatabase(user: User) {
+    private fun createUserInFirebase(emailForFirebase: String, user: User) {
         btnRegister.isEnabled = false
-        database.child("users").child(user.document).setValue(user)
-            .addOnSuccessListener {
+        auth.createUserWithEmailAndPassword(emailForFirebase, user.password)
+            .addOnSuccessListener { result ->
+                val uid = result.user?.uid
+
+                if (uid != null) {
+                    database.child("users").child(uid).setValue(user)
+                }
+
                 sessionManager.saveUser(user)
                 Toast.makeText(this, R.string.success_register, Toast.LENGTH_SHORT).show()
                 navigateToLogin()
