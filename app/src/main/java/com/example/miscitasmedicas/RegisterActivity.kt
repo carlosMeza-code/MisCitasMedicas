@@ -8,8 +8,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -66,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        database = Firebase.database(databaseUrl).reference
+        database = FirebaseDatabase.getInstance(databaseUrl).reference
     }
 
     private fun handleRegister() {
