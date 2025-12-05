@@ -5,7 +5,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-private const val NODE_USERS = "users"
 private const val NODE_CONTACTS = "contacts"
 
 /**
@@ -15,11 +14,10 @@ class RealtimeManager {
 
     private val database = FirebaseDatabase.getInstance().reference
 
-    private fun contactsRef(userId: String) =
-        database.child(NODE_USERS).child(userId).child(NODE_CONTACTS)
+    private fun contactsRef() = database.child(NODE_CONTACTS)
 
-    fun ensureDefaultContacts(userId: String) {
-        contactsRef(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+    fun ensureDefaultContacts() {
+        contactsRef().addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists() && snapshot.childrenCount > 0) return
 
@@ -39,8 +37,8 @@ class RealtimeManager {
                 )
 
                 defaults.forEach { contact ->
-                    val key = contactsRef(userId).push().key ?: return@forEach
-                    contactsRef(userId).child(key).setValue(contact.withId(key))
+                    val key = contactsRef().push().key ?: return@forEach
+                    contactsRef().child(key).setValue(contact.withId(key))
                 }
             }
 
@@ -50,20 +48,19 @@ class RealtimeManager {
         })
     }
 
-    fun addContact(userId: String, contact: Contact, onComplete: (Boolean) -> Unit) {
-        val key = contact.id.ifBlank { contactsRef(userId).push().key }
+    fun addContact(contact: Contact, onComplete: (Boolean) -> Unit) {
+        val key = contact.id.ifBlank { contactsRef().push().key }
         if (key.isNullOrBlank()) {
             onComplete(false)
             return
         }
 
-        contactsRef(userId).child(key).setValue(contact.withId(key)) { error, _ ->
+        contactsRef().child(key).setValue(contact.withId(key)) { error, _ ->
             onComplete(error == null)
         }
     }
 
     fun listenToContacts(
-        userId: String,
         onResult: (List<Contact>) -> Unit,
         onError: (DatabaseError) -> Unit
     ): ValueEventListener {
@@ -80,11 +77,11 @@ class RealtimeManager {
             }
         }
 
-        contactsRef(userId).addValueEventListener(listener)
+        contactsRef().addValueEventListener(listener)
         return listener
     }
 
-    fun removeContactsListener(userId: String, listener: ValueEventListener) {
-        contactsRef(userId).removeEventListener(listener)
+    fun removeContactsListener(listener: ValueEventListener) {
+        contactsRef().removeEventListener(listener)
     }
 }

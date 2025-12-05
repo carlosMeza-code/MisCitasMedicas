@@ -41,9 +41,8 @@ class ContactsActivity : AppCompatActivity() {
         findViewById<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>(R.id.fabAddContact)
             .setOnClickListener { showNewContactDialog(user.uid) }
 
-        realtimeManager.ensureDefaultContacts(user.uid)
+        realtimeManager.ensureDefaultContacts()
         contactsListener = realtimeManager.listenToContacts(
-            userId = user.uid,
             onResult = { contacts ->
                 contactsAdapter.submitList(contacts.sortedBy { it.fullName })
                 emptyView.visibility = if (contacts.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
@@ -60,9 +59,8 @@ class ContactsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val user = auth.currentUser ?: return
         contactsListener?.let { listener ->
-            realtimeManager.removeContactsListener(user.uid, listener)
+            realtimeManager.removeContactsListener(listener)
         }
     }
 
@@ -99,7 +97,7 @@ class ContactsActivity : AppCompatActivity() {
                     email = email
                 )
 
-                realtimeManager.addContact(userId, contact) { success ->
+                realtimeManager.addContact(contact) { success ->
                     val message = if (success) {
                         getString(R.string.contacts_success_saved)
                     } else {
