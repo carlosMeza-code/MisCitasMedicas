@@ -28,7 +28,7 @@
     <string name="success_register">Cuenta creada correctamente. Ahora puedes iniciar sesión.</string>
     <string name="error_register_database">No pudimos guardar tus datos. Intenta nuevamente.</string>
     <string name="error_missing_firebase_config">Configura Firebase (google-services.json y la URL de Realtime Database) para poder registrar usuarios.</string>
-    <string name="firebase_database_url">https://your-project-id-default-rtdb.firebaseio.com/</string>
+    <string name="firebase_database_url">https://miscitasmedicas-420c6-default-rtdb.firebaseio.com/</string>
 
     <!-- Mensajes de error -->
     <string name="error_email_required">Ingresa tu documento de identidad.</string>
