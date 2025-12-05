@@ -2,7 +2,8 @@
   "project_info": {
     "project_number": "742402529068",
     "project_id": "miscitasmedicas-420c6",
-    "storage_bucket": "miscitasmedicas-420c6.firebasestorage.app"
+    "storage_bucket": "miscitasmedicas-420c6.firebasestorage.app",
+    "firebase_url": "https://miscitasmedicas-420c6-default-rtdb.firebaseio.com/"
   },
   "client": [
     {
